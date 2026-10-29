@@ -199,17 +199,81 @@ def submit():
     what should this do when `text` is missing, empty, or enormous? A crash on
     a malformed input is one of the most common real failures there is.
     """
-    payload = request.get_json(silent=True) or {}
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify({
+            "error": "bad_request",
+            "message": "Request body must be a JSON object with text and creator_id.",
+        }), 400
 
-    # TODO: delete this and build the route.
+    creator_id = payload.get("creator_id")
+    if not isinstance(creator_id, str) or not creator_id.strip():
+        return jsonify({
+            "error": "bad_request",
+            "message": "creator_id must be a non-empty string.",
+        }), 400
+
+    text = payload.get("text")
+    if not isinstance(text, str) or not text.strip():
+        return jsonify({
+            "error": "bad_request",
+            "message": "text must be a non-empty string.",
+        }), 400
+
+    word_count = len(text.split())
+    if word_count < 3:
+        return jsonify({
+            "error": "bad_request",
+            "message": "text must contain at least 3 words.",
+        }), 400
+    if word_count > 300:
+        return jsonify({
+            "error": "bad_request",
+            "message": "text must be 300 words or fewer.",
+        }), 400
+
+    import detector
+
+    try:
+        model_score = detector.model_signal(text)
+    except detector.DetectorUnavailable:
+        return jsonify({
+            "error": "detector_unavailable",
+            "message": "The detection model could not be loaded.",
+        }), 503
+    except ValueError:
+        return jsonify({
+            "error": "bad_request",
+            "message": "The submitted text could not be scored. Please provide a longer writing sample.",
+        }), 400
+
+    content_id = str(uuid.uuid4())
+
+    try:
+        audit.log_decision(
+            content_id=content_id,
+            creator_id=creator_id,
+            guess="unsure",
+            model_score=model_score,
+            style_score=None,
+            combined_score=None,
+            label="placeholder",
+            status="partial",
+        )
+    except OSError:
+        return jsonify({
+            "error": "audit_write_failed",
+            "message": "The submission could not be recorded. Please try again.",
+        }), 500
+
     return jsonify({
-        "error": "not_implemented",
-        "message": "POST /submit isn't built yet — see the TODO in app.py.",
-        "you_sent": {
-            "text_length": len(payload.get("text", "")),
-            "creator_id": payload.get("creator_id"),
-        },
-    }), 501
+        "content_id": content_id,
+        "guess": "unsure",
+        "confidence": 0.0,
+        "label": "placeholder",
+        "model_score": model_score,
+        "style_score": 0.0,
+    })
 
 
 @app.post("/appeal")
