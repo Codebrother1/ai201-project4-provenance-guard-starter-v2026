@@ -39,7 +39,13 @@
 <!-- The path a submission takes, from arriving to the label a reader sees.
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
 
-
+1. A writer submits their text and creator ID to the Provenance Guard service through POST /submit.
+2. The service assigns a unique content_id so the submission can be identified, logged, and appealed later.
+3. The GPT-2 model signal analyzes how predictable the writing is. This produces a model_score, but predictable writing does not prove that AI created it.
+4. The stylometry signal examines writing patterns, including sentence-length variation, word variety, and punctuation usage. This produces a style_score, but human writing can also have consistent patterns.
+5. The service combines the model_score and style_score using a defined scoring rule to produce an overall result. If the signals disagree, the system should handle that uncertainty carefully rather than automatically making a strong accusation.
+6. The service selects a reader-facing label (likely human, unsure, or likely AI), records the decision in the audit log, and keeps the information necessary to explain what happened.
+7. The service returns the result to the website. If the writer disagrees, they can request a review through POST /appeal without having to rewrite their original work.
 
 ---
 
