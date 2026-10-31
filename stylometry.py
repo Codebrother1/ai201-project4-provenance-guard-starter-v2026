@@ -64,8 +64,16 @@ def sentence_length_spread(text: str) -> float:
     `stdev` raises on fewer than two values. Decide what that should return
     before the attack set decides for you.
     """
-    # TODO: replace this
-    return 0.0
+    lengths = [len(words(sentence)) for sentence in sentences(text)]
+    lengths = [count for count in lengths if count > 0]
+    if len(lengths) < 2:
+        return 0.0
+
+    mean_length = sum(lengths) / len(lengths)
+    if mean_length == 0:
+        return 0.0
+
+    return statistics.stdev(lengths) / mean_length
 
 
 def type_token_ratio(text: str) -> float:
@@ -80,8 +88,11 @@ def type_token_ratio(text: str) -> float:
     directly comparable on it, and if your test inputs vary a lot in length,
     that alone can look like a signal.
     """
-    # TODO: replace this
-    return 0.0
+    tokens = words(text)
+    total = len(tokens)
+    if total == 0:
+        return 0.0
+    return len(set(tokens)) / total
 
 
 def punctuation_density(text: str) -> float:
@@ -94,8 +105,12 @@ def punctuation_density(text: str) -> float:
         more interesting than full stops, because they vary more between
         writers.
     """
-    # TODO: replace this
-    return 0.0
+    total = len(words(text))
+    if total == 0:
+        return 0.0
+    counted = ",;:!?-\u2013\u2014"
+    marks = sum(text.count(mark) for mark in counted)
+    return marks / total
 
 
 # ── Combining them ───────────────────────────────────────────────────────────
@@ -122,8 +137,31 @@ def style_signal(text: str) -> float:
     you trust it. Plain and ordinary, not formal: formal prose reads as *human*
     to signal one, and it is plain writing that gets accused.
     """
-    # TODO: replace this
-    return 0.5
+    if not words(text):
+        return 0.5
+
+    spread = sentence_length_spread(text)
+    usable_sentences = [
+        sentence for sentence in sentences(text) if words(sentence)
+    ]
+    if len(usable_sentences) < 2:
+        sentence_consistency = 0.5
+    else:
+        sentence_consistency = 1.0 / (1.0 + spread)
+
+    vocabulary_ratio = type_token_ratio(text)
+    vocabulary_repetition = 1.0 - vocabulary_ratio
+
+    measured_punctuation = punctuation_density(text)
+    punctuation_component = 0.5
+
+    score = (
+        0.40 * sentence_consistency
+        + 0.40 * vocabulary_repetition
+        + 0.20 * punctuation_component
+    )
+    score = min(max(score, 0.0), 1.0)
+    return round(score, 4)
 
 
 if __name__ == "__main__":
