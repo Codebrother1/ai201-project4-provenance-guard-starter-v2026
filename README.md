@@ -40,11 +40,11 @@
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
 
 1. A writer submits their text and creator ID to the Provenance Guard service through POST /submit.
-2. The service assigns a unique content_id so the submission can be identified, logged, and appealed later.
-3. The GPT-2 model signal analyzes how predictable the writing is. This produces a model_score, but predictable writing does not prove that AI created it.
-4. The stylometry signal examines writing patterns, including sentence-length variation, word variety, and punctuation usage. This produces a style_score, but human writing can also have consistent patterns.
-5. The service combines the model_score and style_score using a defined scoring rule to produce an overall result. If the signals disagree, the system should handle that uncertainty carefully rather than automatically making a strong accusation.
-6. The service selects a reader-facing label (likely human, unsure, or likely AI), records the decision in the audit log, and keeps the information necessary to explain what happened.
+2. The GPT-2 model signal analyzes how predictable the writing is. This produces a model_score, but predictable writing does not prove that AI created it.
+3. The stylometry signal examines sentence-length variation and word variety. punctuation_density() is measured, but style_signal() does not let that measurement change the score. The style score is 40% sentence consistency, 40% vocabulary repetition, and 20% a fixed neutral punctuation component of 0.5. This produces a style_score, but human writing can also have consistent patterns.
+4. The service combines the model_score and style_score using a defined scoring rule to produce an overall result. If the signals disagree, the system should handle that uncertainty carefully rather than automatically making a strong accusation.
+5. The service selects an internal guess of "human", "unsure", or "ai", and a complete message for the reader. That message explains the result. It does not prove who wrote the text.
+6. After validation, model scoring, stylometry, combining, and labeling have succeeded, the service assigns a unique content_id, records the decision in the audit log, and keeps the information necessary to explain what happened.
 7. The service returns the result to the website. If the writer disagrees, they can request a review through POST /appeal without having to rewrite their original work.
 
 ---
@@ -61,17 +61,29 @@
 
 **What it measures:**
 
+My model signal runs a local GPT-2 model on the submission and estimates how predictable the text is. `detector.model_signal()` turns the model's perplexity into a `model_score` from 0 to 1. A higher score means the writing looked more predictable, so this heuristic treats it as more AI-like. That number is not a verified probability that AI wrote the passage.
+
 **Why that might differ between human and AI writing:**
 
+Some AI-generated writing follows predictable language patterns, because a model keeps choosing likely next words. That can give me one clue when I look at it alongside my style signal.
+
 **What it can't see:**
+
+Predictability does not establish authorship. Straightforward, formulaic, or carefully edited human writing can look predictable too, so a high score can be a false positive. AI writing can be less predictable, so a low score can be a false negative. I have not measured how often either mistake happens. The scorer also stops at 400 tokens, so it may not read an entire submission.
 
 ### Signal two — the style signal
 
 **What it measures:**
 
+I measure the shape of the writing. `sentence_length_spread()` measures variation in sentence lengths. `type_token_ratio()` measures unique words relative to all words. `punctuation_density()` measures selected punctuation marks per word: commas, semicolons, colons, exclamation points, question marks, hyphens, and en or em dashes. It does not count periods. `style_signal()` turns this into a `style_score` from 0 to 1 using 40% sentence consistency, 40% vocabulary repetition, and 20% a fixed neutral punctuation contribution of 0.5. Vocabulary repetition is one minus the type-token ratio. With at least two usable sentences, sentence consistency is `1 / (1 + spread)`, so similar lengths raise the score. Measured punctuation density does not currently change the score. A higher score means this heuristic reads the writing as more regular. It does not prove that AI wrote it.
+
 **Why that might differ between human and AI writing:**
 
+Repeated word choices and sentences of similar length can sometimes show more regular writing patterns. I use the style score as a second perspective alongside GPT-2. This is a heuristic, not a reliable rule for identifying AI authorship.
+
 **What it can't see:**
+
+Human writers can be consistent or repetitive, and AI-generated writing can vary, so this signal can produce false positives and false negatives. I have not measured how often. Short passages provide little evidence. With no usable words, `style_signal()` returns 0.5. With fewer than two sentences that contain words, sentence consistency stays at a neutral 0.5, because there is not enough variation to judge. Punctuation choices are not treated as a sign of AI use. Stylometry cannot prove authorship.
 
 ### The combining rule
 
@@ -80,7 +92,13 @@
 
 **The rule:**
 
+Both GPT-2 and stylometry produce a score from 0 to 1. Normally the combined score is their weighted average. If the absolute difference between the two scores is 0.40 or greater, `combine_signals()` returns 0.5000 instead of that average. I chose the disagreement rule to avoid making a strong accusation when the two signals point in different directions. Returning 0.5000 puts the result in the unsure band, above 0.35 and below 0.65. This is a design safeguard. It is not proof that the detection system has been validated, and it is not proof that the rule improves measured accuracy.
+
 **The numbers:**
+
+The current weights are 0.50 for the model signal and 0.50 for the style signal. The disagreement gap is 0.40. The weighted average is clamped to 0–1 and rounded to four decimal places. The disagreement result is returned as 0.5000.
+
+On a live `POST /submit` test, the model score was 0.6764 and the style score was 0.4681. The difference was 0.2083, below 0.40, so the function used the weighted average. The combined score was 0.5723, and the guess was "unsure".
 
 **Where it lives:** `scoring.py::combine_signals`
 
@@ -88,6 +106,8 @@
      somewhere else, say where. -->
 
 **A case where my two signals split, and what my rule does with it:**
+
+This case is illustrative. It is not a live submission. If the model score were 0.90 and the style score were 0.10, the difference would be 0.80. That gap is at least 0.40, so the function would return 0.5000 and the guess would be "unsure".
 
 
 
@@ -130,36 +150,72 @@ The detector cannot prove who wrote a passage. An unsure result means the analys
      diagnostics. -->
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/submit \
+curl -X POST http://127.0.0.1:5000/submit \
   -H "Content-Type: application/json" \
-  -d '{"text": "...", "creator_id": "..."}'
+  -d '{"creator_id":"test-writer-002","text":"I spent Saturday morning organizing my desk and sorting through old notebooks. Some pages reminded me of ideas I had forgotten about, while others were filled with unfinished plans. By lunchtime, the room felt much more comfortable, and I was glad I had finally made time for it."}'
 ```
 
 ```json
-
+{
+  "content_id": "b76f60b0-5bd8-40ff-a1a3-5fe97d10c35a",
+  "guess": "unsure",
+  "confidence": 0.5723,
+  "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+  "model_score": 0.6764,
+  "style_score": 0.4681
+}
 ```
 
 **An appeal**
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/appeal \
+curl -X POST http://127.0.0.1:5000/appeal \
   -H "Content-Type: application/json" \
-  -d '{"content_id": "...", "reasoning": "..."}'
+  -d '{"content_id":"b76f60b0-5bd8-40ff-a1a3-5fe97d10c35a","reasoning":"I wrote this passage myself without AI assistance. I would like the result reviewed."}'
 ```
 
 ```json
-
+{
+  "content_id": "b76f60b0-5bd8-40ff-a1a3-5fe97d10c35a",
+  "message": "Your appeal request was recorded. It has not yet been reviewed.",
+  "status": "under_review"
+}
 ```
 
 **What the log shows afterwards**
 
 ```bash
-$ curl "http://127.0.0.1:5000/log?limit=3"
+curl "http://127.0.0.1:5000/log?limit=2"
 ```
 
 ```json
-
+{
+  "count": 2,
+  "entries": [
+    {
+      "timestamp": "2026-10-31T10:17:42+00:00",
+      "content_id": "b76f60b0-5bd8-40ff-a1a3-5fe97d10c35a",
+      "creator_id": "test-writer-002",
+      "guess": "unsure",
+      "model_score": 0.6764,
+      "style_score": 0.4681,
+      "combined_score": 0.5723,
+      "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+      "status": "decided"
+    },
+    {
+      "timestamp": "2026-10-31T10:21:43+00:00",
+      "content_id": "b76f60b0-5bd8-40ff-a1a3-5fe97d10c35a",
+      "creator_id": "test-writer-002",
+      "event": "appeal",
+      "status": "under_review",
+      "reasoning": "I wrote this passage myself without AI assistance. I would like the result reviewed."
+    }
+  ]
+}
 ```
+
+These blocks are historical test outputs from an earlier run: rerunning `/submit` creates a new content_id, and replaying this appeal for the existing content_id would now return HTTP 409 because it is already recorded.
 
 ---
 
@@ -167,15 +223,15 @@ $ curl "http://127.0.0.1:5000/log?limit=3"
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I asked ChatGPT and Cursor to help me build a combining rule for the GPT-2 and stylometry signals, especially when the two measurements disagreed. I wanted to avoid a strong accusation based on conflicting evidence.
+- *What came back:* AI helped implement and explain a 50/50 weighted average with a disagreement safeguard. If the scores differ by 0.40 or more, the function returns 0.5000, which maps to "unsure". We checked that rule with several numerical examples.
+- *What I changed:* I kept the disagreement safeguard because communicating uncertainty mattered to me. I also made sure the README describes it as a cautious design decision, not a validated improvement in detection accuracy. I verified the behavior through tests rather than assuming the AI-generated code was correct.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I asked AI to inspect the Sample Run requirements and help document a real submission, its appeal, and the corresponding audit records.
+- *What came back:* Cursor identified the stored scores and the appeal status, and reported that the original submitted passage could not be recovered from the repository's audit log.
+- *What I changed:* I used the exact passage from my earlier Warp test command instead of inventing a replacement. I kept the real scores, content ID, and audit records together, and I added a note that these are historical outputs. I also documented that repeating the existing appeal would return HTTP 409, not another successful appeal.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
