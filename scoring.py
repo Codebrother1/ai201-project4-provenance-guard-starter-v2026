@@ -21,7 +21,7 @@ import config
 
 def combine_signals(model_score: float, style_score: float) -> float:
     """
-    Combine two 0–1 signals into one 0–1 score. ← TODO (Milestone 4)
+    Combine two 0–1 signals into one 0–1 score.
 
     Both inputs point the same way: higher means more likely AI. Your output
     should too.
@@ -66,7 +66,6 @@ def combine_signals(model_score: float, style_score: float) -> float:
 def score_to_label(score: float) -> tuple[str, str]:
     """
     Turn a score into a guess and the text a reader actually sees.
-    ← TODO (Milestone 5)
 
     Returns:
         (guess, label_text) — where `guess` is a short machine-readable string
@@ -89,12 +88,28 @@ def score_to_label(score: float) -> tuple[str, str]:
     think if they got it on their own work. That question is the whole
     milestone.
     """
-    # TODO: replace this — thresholds are in config.py
     if score >= config.AI_THRESHOLD:
-        return "ai", "PLACEHOLDER — write the high-confidence AI label."
+        return (
+            "ai",
+            "Our analysis found writing patterns that may be associated with "
+            "AI-generated content. However, this result does not prove AI was "
+            "used, and our detection system can make mistakes. If you believe "
+            "this assessment is incorrect, you may request a review.",
+        )
     if score <= config.HUMAN_THRESHOLD:
-        return "human", "PLACEHOLDER — write the high-confidence human label."
-    return "unsure", "PLACEHOLDER — write the unsure label."
+        return (
+            "human",
+            "Our analysis found writing patterns that are more consistent with "
+            "human-written content. However, AI detection is not perfect, so "
+            "this result should not be treated as proof of authorship.",
+        )
+    return (
+        "unsure",
+        "Our analysis could not confidently determine whether this writing was "
+        "human-written or AI-generated. Detection tools can make mistakes, and "
+        "this result is not an accusation. If you disagree, you may request a "
+        "review.",
+    )
 
 
 def label_ranges() -> list[tuple[str, str]]:

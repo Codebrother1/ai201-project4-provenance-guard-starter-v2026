@@ -102,14 +102,16 @@
 
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
-| high-confidence human |  |  |
-| unsure |  |  |
-| high-confidence AI |  |  |
+| high-confidence human | 0.00–0.35, including 0.00 and 0.35 | Our analysis found writing patterns that are more consistent with human-written content. However, AI detection is not perfect, so this result should not be treated as proof of authorship. |
+| unsure | above 0.35 and below 0.65 | Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review. |
+| high-confidence AI | 0.65–1.00, including 0.65 and 1.00 | Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review. |
 
 **Why I worded the "unsure" one this way:**
 <!-- It's the hardest of the three. It has to admit uncertainty without
      sounding like an accusation, because the person reading it may well have
      written every word themselves. -->
+
+The detector cannot prove who wrote a passage. An unsure result means the analysis was inconclusive, not that the writer is being accused. A wrong accusation could unfairly affect a genuine writer, so the message says the tools can be mistaken and offers a way to request a review. If the writer does, the service records the appeal with status `under_review`. That status means the request was saved. It does not mean a person has finished reviewing the writing. The service also has no account login, so recording an appeal does not confirm the requester's identity.
 
 
 
