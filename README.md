@@ -126,6 +126,8 @@ This case is illustrative. It is not a live submission. If the model score were 
 | unsure | above 0.35 and below 0.65 | Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review. |
 | high-confidence AI | 0.65–1.00, including 0.65 and 1.00 | Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review. |
 
+These ranges describe the original Unit 7 configuration. After the Unit 8 fairness improvement, the current AI cutoff is 0.72, so scores above 0.35 and below 0.72 are classified as `unsure`, while scores at or above 0.72 are classified as `ai`.
+
 **Why I worded the "unsure" one this way:**
 <!-- It's the hardest of the three. It has to admit uncertainty without
      sounding like an accusation, because the person reading it may well have
@@ -447,34 +449,122 @@ Making the service more willing to say `ai` could catch more of the GPT-6 passag
 
 **What I changed:**
 
+I raised `AI_THRESHOLD` in `config.py` from 0.65 to 0.72. A combined score of 0.72 or above is now the AI label. The human cutoff stays 0.35. The model and style weights stay 0.5 and 0.5. The disagreement rule in `scoring.py::combine_signals` stays 0.40. The comment next to the cutoff now says `score >= AI_THRESHOLD`, which matches `scoring.py::score_to_label`. That is the only behavior change.
+
 **Which diagnosis pointed at it:**
+
+The baseline evaluation missed Criterion 3. In `results/run_2026-11-08_0515_before.md`, the five GPT-6 combined scores were 0.5841, 0.6179, 0.6347, 0.4798, and 0.6273, so the label-range set never produced `ai`. The closest case was A03 at 0.6347. Lowering the AI cutoff far enough to label A03 as `ai` would also have labeled FP02 as `ai`. FP02's recorded combined score is 0.6385, which is higher than every GPT-6 combined score in that file. On the baseline attack report, four passages described as human writing were already labeled `ai`: FP04 at 0.6511, FP03 at 0.6585, FP05 at 0.6897, and FP07 at 0.7148. I widened the unsure band so those four accusations would fall below the line. I did not lower the cutoff to make Criterion 3 pass.
 
 ### Attack Run — After
 
-<!-- Same format. `run_attacks.py --label after` -->
+The after report is `results/attack_run_2026-11-08_0553_after.md`. I compared every ID with `results/attack_run_2026-11-08_0414_before.md`. Both files contain 56 attacks. The runner again marked automatic BROKE as 0. That automatic mark only covers HTTP 500, a crash, or no response. It does not decide fairness or evasion. The HELD and BROKE marks below use the same hand rules as Attack Run — Before.
 
+HTTP totals are the same in both reports: 37 HTTP 200, 17 HTTP 400, and 2 HTTP 429. There was no HTTP 500 and no missing attack. Model score, style score, and combined score match on every ID. The only guess changes are FP03, FP04, FP05, and FP07, from `ai` to `unsure`. Their reader-facing labels changed to the approved unsure sentence. Every other guess and every HTTP status stayed the same.
 
+Manual totals are 41 HELD and 15 BROKE before, and 45 HELD and 11 BROKE after. The four-row drop in BROKE is those four false-positive rows.
+
+| Family | Attacks | Before HELD | Before BROKE | After HELD | After BROKE |
+|---|---:|---:|---:|---:|---:|
+| evasion | 10 | 1 | 9 | 1 | 9 |
+| false_positive | 8 | 4 | 4 | 8 | 0 |
+| prompt_injection | 6 | 6 | 0 | 6 | 0 |
+| malformed | 20 | 18 | 2 | 18 | 2 |
+| flood_same_creator | 12 | 12 | 0 | 12 | 0 |
+
+| ID | Family | HTTP status | Guess | Verdict |
+|---|---|---|---|---|
+| EV01 | evasion | 200 | human | BROKE |
+| EV02 | evasion | 200 | unsure | BROKE |
+| EV03 | evasion | 200 | unsure | BROKE |
+| EV04 | evasion | 200 | unsure | BROKE |
+| EV05 | evasion | 200 | unsure | BROKE |
+| EV06 | evasion | 200 | unsure | BROKE |
+| EV07 | evasion | 200 | unsure | BROKE |
+| EV08 | evasion | 200 | human | BROKE |
+| EV09 | evasion | 200 | unsure | BROKE |
+| EV10 | evasion | 200 | ai | HELD |
+| FP01 | false_positive | 200 | unsure | HELD |
+| FP02 | false_positive | 200 | unsure | HELD |
+| FP03 | false_positive | 200 | unsure | HELD |
+| FP04 | false_positive | 200 | unsure | HELD |
+| FP05 | false_positive | 200 | unsure | HELD |
+| FP06 | false_positive | 200 | unsure | HELD |
+| FP07 | false_positive | 200 | unsure | HELD |
+| FP08 | false_positive | 200 | unsure | HELD |
+| PI01 | prompt_injection | 200 | unsure | HELD |
+| PI02 | prompt_injection | 200 | human | HELD |
+| PI03 | prompt_injection | 200 | unsure | HELD |
+| PI04 | prompt_injection | 200 | unsure | HELD |
+| PI05 | prompt_injection | 200 | unsure | HELD |
+| PI06 | prompt_injection | 200 | unsure | HELD |
+| MF01 | malformed | 400 | — | HELD |
+| MF02 | malformed | 400 | — | HELD |
+| MF03 | malformed | 200 | human | BROKE |
+| MF04 | malformed | 200 | unsure | BROKE |
+| MF05 | malformed | 400 | — | HELD |
+| MF06 | malformed | 400 | — | HELD |
+| MF07 | malformed | 200 | unsure | HELD |
+| MF08 | malformed | 400 | — | HELD |
+| RQ01 | malformed | 400 | — | HELD |
+| RQ02 | malformed | 400 | — | HELD |
+| RQ03 | malformed | 400 | — | HELD |
+| RQ04 | malformed | 400 | — | HELD |
+| RQ05 | malformed | 400 | — | HELD |
+| RQ06 | malformed | 400 | — | HELD |
+| RQ07 | malformed | 400 | — | HELD |
+| RQ08 | malformed | 400 | — | HELD |
+| RQ09 | malformed | 400 | — | HELD |
+| RQ10 | malformed | 400 | — | HELD |
+| RQ11 | malformed | 400 | — | HELD |
+| RQ12 | malformed | 400 | — | HELD |
+| FL01_01 | flood_same_creator | 200 | human | HELD |
+| FL01_02 | flood_same_creator | 200 | human | HELD |
+| FL01_03 | flood_same_creator | 200 | human | HELD |
+| FL01_04 | flood_same_creator | 200 | human | HELD |
+| FL01_05 | flood_same_creator | 200 | human | HELD |
+| FL01_06 | flood_same_creator | 200 | human | HELD |
+| FL01_07 | flood_same_creator | 200 | human | HELD |
+| FL01_08 | flood_same_creator | 200 | human | HELD |
+| FL01_09 | flood_same_creator | 200 | human | HELD |
+| FL01_10 | flood_same_creator | 200 | human | HELD |
+| FL01_11 | flood_same_creator | 429 | — | HELD |
+| FL01_12 | flood_same_creator | 429 | — | HELD |
+
+False-positive `ai` labels went from 4 of 8 to 0 of 8. FP03, FP04, FP05, and FP07 are HELD after because the guess is `unsure`. Their combined scores, 0.6585, 0.6511, 0.6897, and 0.7148, are all below 0.72. EV10 is still the only `ai` guess in the after report, at combined 0.819.
 
 **Did it help, and how do I know:**
 
-<!-- Widening the unsure band usually fixes one problem and creates another.
-     Reporting that trade honestly is worth full credit. -->
+It reduced unsupported AI accusations on this attack set. Four staff-described human passages that had been labeled `ai` are now `unsure`, and the manual BROKE count fell from 15 to 11. It did not create an `ai` label for the GPT-6 evaluation samples. The after evaluation is `results/run_2026-11-08_0549_after.md`, three trials and 105 requests. Its combined scores match the baseline file, so no evaluation guess changed. The highest combined score in that run is 0.6347, which is below both 0.65 and 0.72.
 
+| Criterion | After result |
+|---|---|
+| 1. False-positive protection | MET in all three trials. 0 of 10 self-reported human samples were labeled `ai`. |
+| 2. Fair appeal process | Not rerun after the threshold change. The appeal code was not changed. |
+| 3. Label coverage | MISSED in all three trials. The labels observed were `human` and `unsure`. |
+| 4. Invalid input | MET in all three trials. 5 of 5 invalid requests returned HTTP 400 with a `bad_request` explanation and null detection fields. |
+| 5. Score separation | MET in all three trials. Human mean 0.3634, AI mean 0.58876, gap 0.22536. |
 
+Criterion 2 still rests on `results/appeals_before.md`. That file records 15 baseline appeals, five in each of three trials. Each returned HTTP 200, each added one appeal line with status `under_review`, and each original decision stayed `decided`. I did not submit new appeals after raising the cutoff.
 
 ---
 
 ## What's Still Broken
 
-<!-- For each attack still getting through and each criterion still missed:
-     what you'd do, and why you stopped. -->
+Nine evasion rows still avoid an `ai` label. EV01 and EV08 are `human`. EV02 through EV07, and EV09, are `unsure`. Their combined scores were already below 0.65, so raising the cutoff to 0.72 did not create those misses and does not repair them. EV10 still returns `ai`. Labeling the other nine as `ai` would mean treating `unsure` and `human` as accusations. I stopped there.
 
+MF03 and MF04 are still accepted. MF03 returned HTTP 200, guess `human`, combined 0.15. MF04 returned HTTP 200, guess `unsure`, combined 0.5. The other malformed rows, including RQ01 through RQ12, still return HTTP 400 with no score. MF07 is still HELD: right-to-left text was scored, and the guess is `unsure`. Fixing MF03 and MF04 would be a validation change. This improvement was only the AI cutoff, so I left validation alone.
 
+Criterion 3 is still missed. In all three after-evaluation trials, the five GPT-6 samples stayed `unsure` at 0.5841, 0.6179, 0.6347, 0.4798, and 0.6273. A04's model score is 0.5177, already under 0.72. The other four have higher model scores, and the equal-weight average with the style score stays under 0.72. I did not lower the cutoff to force one `ai` label, because that would also have accused FP02.
+
+Four of the eight staff-described human passages changed from `ai` to `unsure`; these were the four cases with combined scores between the original 0.65 cutoff and the new 0.72 cutoff. That shows what this cutoff did on those rows. It does not show how the detector treats human writing outside this set. FP07 at 0.7148 is 0.0052 under the new line.
+
+`unsure` means the two signals did not produce enough evidence for either confident label. It does not confirm that a person wrote the passage. The appeal records are intake records. No person adjudicated them.
+
+Both attack reports describe the flood rows as "20 rapid submissions from one creator," and both reports contain 12 rows for that family. The saved result is 10 HTTP 200 responses for `attacker_flood`, then 2 HTTP 429 responses. The files do not say why the targeting text says 20 while the row count is 12. I am not filling that gap with a guess.
 
 **The trade I'd make if this ran for real:**
 
-<!-- Two sentences. Fewer wrong accusations means more AI text getting through.
-     Say which way you'd go and WHO PAYS FOR IT. -->
+I would keep the wider unsure band. A writer who receives a false `ai` label pays more than a reader who sees `unsure` on text that may have been generated. On this evidence, the writers in the 0.65 to 0.72 band are the ones I protected, and the readers who wanted a firm AI label on the nine evasions and the five GPT-6 samples are the ones who still do not get one.
 
 
 
