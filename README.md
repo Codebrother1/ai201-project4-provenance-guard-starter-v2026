@@ -239,7 +239,7 @@ These blocks are historical test outputs from an earlier run: rerunning `/submit
 
 ## Rate Limiting
 
-**My limits:** ___ per minute, ___ per day
+**My limits:** 10 per minute, 200 per day
 
 **Why those numbers and not others:**
 <!-- Think about two people: a real writer submitting their own work a few
@@ -247,16 +247,22 @@ These blocks are historical test outputs from an earlier run: rerunning `/submit
      thresholds. Your numbers have to be liveable for the first and hostile to
      the second. -->
 
+A writer can submit several drafts or revisions without being blocked right away. A script that keeps sending variations as the same caller is slowed after 10 submissions in a minute. The 200-per-day limit leaves room for ongoing revisions and limits sustained automated probing. These are my initial design choices, not proven optimal limits.
+
 **What a caller counts as:** <!-- per address, or per creator_id? They fail
 differently — one script can look like a thousand callers, and one household
 can look like one. -->
+
+The limiter uses a non-empty `creator_id` string when the request supplies one. Otherwise it uses the requester's IP address. The flood test counted as `flood_tester`. That ID is not authenticated, so changing IDs can avoid the per-caller limit. Counts are stored with `memory://`, so they reset when the server restarts.
 
 **The run of status codes when I pushed past it:**
 
 <!-- python run_attacks.py --flood 15 -->
 
-```
+I ran `python run_attacks.py --flood 15`. The saved result is `results/flood_2026-11-08_0357.md`. It sent 15 submissions as `flood_tester`. The first 10 returned HTTP 200, and the last 5 returned HTTP 429. Those five 429 responses show that the 10-per-minute limit was reached. This run did not test the 200-per-day limit. The audit log kept its earlier records, added 10 `decided` submissions, and added 5 rejections with `event` `"rejected"`, `status` `"rejected"`, `reason` `"rate_limited"`, and `limit` `"10 per 1 minute"`.
 
+```
+200 200 200 200 200 200 200 200 200 200 429 429 429 429 429
 ```
 
 ---
