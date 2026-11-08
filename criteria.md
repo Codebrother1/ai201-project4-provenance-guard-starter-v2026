@@ -56,6 +56,8 @@ I chose this limit because I don't want the system to falsely accuse someone of 
 
 All 5 out of 5 valid appeals must be successfully recorded in the audit log and have their submission status marked `under_review` in each evaluation trial.
 
+**Revision after baseline testing:** In each evaluation trial, 5 out of 5 valid appeals must return HTTP 200, append exactly one matching appeal event with status `under_review` and recorded reasoning, and preserve the corresponding original decision and scores unchanged. This measures appeal intake and audit recording, not human adjudication. The revision matches the existing append-only audit design. It does not weaken that design or change the implemented behavior. The original sentence asks for the submission status itself to be marked `under_review`. That literal status change was not met. The new appeal event records the `under_review` status instead, and the original decision stays `decided`.
+
 **Why this target:**
 
 I chose this target because I want the appeal process to be fair. Everyone who submits a valid appeal should have the opportunity to challenge the system's decision and have their request recorded for review.

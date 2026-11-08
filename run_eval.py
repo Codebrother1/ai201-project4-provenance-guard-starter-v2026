@@ -121,16 +121,24 @@ def main():
                     payload = response.json() if response.content else {}
                     results.append({
                         "status": response.status_code,
+                        "content_id": payload.get("content_id"),
                         "guess": payload.get("guess"),
                         "confidence": payload.get("confidence"),
                         "model_score": payload.get("model_score"),
                         "style_score": payload.get("style_score"),
                         "label": payload.get("label"),
+                        "error": payload.get("error"),
+                        "message": payload.get("message"),
                         "sent": preview,
                     })
                 except Exception as exc:  # noqa: BLE001
-                    results.append({"status": None, "error": f"{type(exc).__name__}: {exc}",
-                                    "sent": preview})
+                    results.append({
+                        "status": None,
+                        "content_id": None,
+                        "error": f"{type(exc).__name__}: {exc}",
+                        "message": None,
+                        "sent": preview,
+                    })
 
             trials.append(results)
             guesses = [r.get("guess") or "—" for r in results]
@@ -173,7 +181,9 @@ def write_report(rows, args):
 
     lines += ["", "---", "", "## What actually came back", "",
               "Real output. Paste the relevant parts into your README — the rubric",
-              "asks for the actual JSON, not a description of it.", ""]
+              "asks for the actual JSON, not a description of it. Each result includes",
+              "`content_id`, `error`, and `message` from the response. A null value",
+              "means the response did not include that field.", ""]
 
     for row in rows:
         scenario = row["scenario"]
