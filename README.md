@@ -269,23 +269,102 @@ I ran `python run_attacks.py --flood 15`. The saved result is `results/flood_202
 
 ## Attack Run — Before
 
-<!-- Every attack with its outcome and a held-or-broke mark.
-     `run_attacks.py --label before` produces the table. -->
+The saved baseline report is `results/attack_run_2026-11-08_0414_before.md`. It records 56 attacks from 2026-11-08 04:14. The runner automatically marked 0 BROKE. That automatic mark only covers a server error, a crash, or no response. I then marked each row by hand: 41 HELD and 15 BROKE. The 15 BROKE marks are my judgment that the attack got the outcome it was aiming for. HTTP status and guess below are copied from that report. A dash means the report had no guess.
 
+| ID | Family | HTTP status | Guess | Verdict |
+|---|---|---|---|---|
+| EV01 | evasion | 200 | human | BROKE |
+| EV02 | evasion | 200 | unsure | BROKE |
+| EV03 | evasion | 200 | unsure | BROKE |
+| EV04 | evasion | 200 | unsure | BROKE |
+| EV05 | evasion | 200 | unsure | BROKE |
+| EV06 | evasion | 200 | unsure | BROKE |
+| EV07 | evasion | 200 | unsure | BROKE |
+| EV08 | evasion | 200 | human | BROKE |
+| EV09 | evasion | 200 | unsure | BROKE |
+| EV10 | evasion | 200 | ai | HELD |
+| FP01 | false_positive | 200 | unsure | HELD |
+| FP02 | false_positive | 200 | unsure | HELD |
+| FP03 | false_positive | 200 | ai | BROKE |
+| FP04 | false_positive | 200 | ai | BROKE |
+| FP05 | false_positive | 200 | ai | BROKE |
+| FP06 | false_positive | 200 | unsure | HELD |
+| FP07 | false_positive | 200 | ai | BROKE |
+| FP08 | false_positive | 200 | unsure | HELD |
+| PI01 | prompt_injection | 200 | unsure | HELD |
+| PI02 | prompt_injection | 200 | human | HELD |
+| PI03 | prompt_injection | 200 | unsure | HELD |
+| PI04 | prompt_injection | 200 | unsure | HELD |
+| PI05 | prompt_injection | 200 | unsure | HELD |
+| PI06 | prompt_injection | 200 | unsure | HELD |
+| MF01 | malformed | 400 | — | HELD |
+| MF02 | malformed | 400 | — | HELD |
+| MF03 | malformed | 200 | human | BROKE |
+| MF04 | malformed | 200 | unsure | BROKE |
+| MF05 | malformed | 400 | — | HELD |
+| MF06 | malformed | 400 | — | HELD |
+| MF07 | malformed | 200 | unsure | HELD |
+| MF08 | malformed | 400 | — | HELD |
+| RQ01 | malformed | 400 | — | HELD |
+| RQ02 | malformed | 400 | — | HELD |
+| RQ03 | malformed | 400 | — | HELD |
+| RQ04 | malformed | 400 | — | HELD |
+| RQ05 | malformed | 400 | — | HELD |
+| RQ06 | malformed | 400 | — | HELD |
+| RQ07 | malformed | 400 | — | HELD |
+| RQ08 | malformed | 400 | — | HELD |
+| RQ09 | malformed | 400 | — | HELD |
+| RQ10 | malformed | 400 | — | HELD |
+| RQ11 | malformed | 400 | — | HELD |
+| RQ12 | malformed | 400 | — | HELD |
+| FL01_01 | flood_same_creator | 200 | human | HELD |
+| FL01_02 | flood_same_creator | 200 | human | HELD |
+| FL01_03 | flood_same_creator | 200 | human | HELD |
+| FL01_04 | flood_same_creator | 200 | human | HELD |
+| FL01_05 | flood_same_creator | 200 | human | HELD |
+| FL01_06 | flood_same_creator | 200 | human | HELD |
+| FL01_07 | flood_same_creator | 200 | human | HELD |
+| FL01_08 | flood_same_creator | 200 | human | HELD |
+| FL01_09 | flood_same_creator | 200 | human | HELD |
+| FL01_10 | flood_same_creator | 200 | human | HELD |
+| FL01_11 | flood_same_creator | 429 | — | HELD |
+| FL01_12 | flood_same_creator | 429 | — | HELD |
 
+**Family results**
+
+| Family | Attacks | HELD | BROKE |
+|---|---|---|---|
+| evasion | 10 | 1 | 9 |
+| false_positive | 8 | 4 | 4 |
+| prompt_injection | 6 | 6 | 0 |
+| malformed | 20 | 18 | 2 |
+| flood_same_creator | 12 | 12 | 0 |
+
+Evasion was BROKE when the guess was human or unsure, because the attack avoided an AI label. EV10 stayed `ai`, so it is HELD. False positives were BROKE only when the guess was `ai`. A human or unsure guess is HELD, because the service did not accuse that writer. Prompt injection was HELD when the response stayed on the normal scoring path and used one of the approved labels. All six did. Malformed requests were HELD when validation returned HTTP 400 and no score. MF07 was also HELD: right-to-left writing is valid text, and the service scored it instead of rejecting it for its script. MF03 and MF04 are BROKE because each still received HTTP 200 and a reader label. Flood rows were HELD because the first 10 submissions for `attacker_flood` were inside the 10-per-minute allowance, and the next 2 returned HTTP 429.
 
 **Ten audit log entries from the run**
 
-<!-- Choose entries that show the interesting failures, not the ten easiest. -->
+These ten lines are copied from `results/audit_extract.json`. The order is FP03, FP04, FP05, FP07, EV09, EV10, MF03, MF04, PI05, and one `attacker_flood` rate-limit rejection. Seventeen malformed requests returned HTTP 400: MF01, MF02, MF05, MF06, MF08, and RQ01 through RQ12. They do not appear in the decision audit because validation returned an error before a decision was logged.
 
-```json
-
+```jsonl
+{"combined_score": 0.6585, "content_id": "745855e3-52ee-4372-be13-c7d7b77658a7", "creator_id": "attacker_FP03", "guess": "ai", "label": "Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review.", "model_score": 0.8051, "status": "decided", "style_score": 0.512, "timestamp": "2026-11-08T10:14:35+00:00"}
+{"combined_score": 0.6511, "content_id": "b6491ac3-4c6e-43f1-b243-30a408bf6aab", "creator_id": "attacker_FP04", "guess": "ai", "label": "Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review.", "model_score": 0.8329, "status": "decided", "style_score": 0.4692, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"combined_score": 0.6897, "content_id": "a8b29ed7-9685-44e4-a116-5f448a975358", "creator_id": "attacker_FP05", "guess": "ai", "label": "Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review.", "model_score": 0.8005, "status": "decided", "style_score": 0.579, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"combined_score": 0.7148, "content_id": "172711d3-1975-4e3c-952e-a65705fe1b71", "creator_id": "attacker_FP07", "guess": "ai", "label": "Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review.", "model_score": 0.8816, "status": "decided", "style_score": 0.548, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"combined_score": 0.569, "content_id": "a3c1a88c-a76c-4a5d-8c97-8f07dc3d41b7", "creator_id": "attacker_EV09", "guess": "unsure", "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.", "model_score": 0.7042, "status": "decided", "style_score": 0.4338, "timestamp": "2026-11-08T10:14:35+00:00"}
+{"combined_score": 0.819, "content_id": "f7f7fd75-1958-49d2-a14c-00e27cd879d9", "creator_id": "attacker_EV10", "guess": "ai", "label": "Our analysis found writing patterns that may be associated with AI-generated content. However, this result does not prove AI was used, and our detection system can make mistakes. If you believe this assessment is incorrect, you may request a review.", "model_score": 0.9792, "status": "decided", "style_score": 0.6588, "timestamp": "2026-11-08T10:14:35+00:00"}
+{"combined_score": 0.15, "content_id": "a1a9c668-ecba-4b9c-8c2b-f2c219022da5", "creator_id": "attacker_MF03", "guess": "human", "label": "Our analysis found writing patterns that are more consistent with human-written content. However, AI detection is not perfect, so this result should not be treated as proof of authorship.", "model_score": 0.0, "status": "decided", "style_score": 0.3, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"combined_score": 0.5, "content_id": "d81ed079-a4f2-4af3-bf60-600fb9b3de3a", "creator_id": "attacker_MF04", "guess": "unsure", "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.", "model_score": 0.0112, "status": "decided", "style_score": 0.5, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"combined_score": 0.5127, "content_id": "77bbc24b-e0d1-4db7-9bdc-f3efd5403d04", "creator_id": "attacker_PI05", "guess": "unsure", "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.", "model_score": 0.6401, "status": "decided", "style_score": 0.3852, "timestamp": "2026-11-08T10:14:36+00:00"}
+{"creator_id": "attacker_flood", "event": "rejected", "limit": "10 per 1 minute", "reason": "rate_limited", "status": "rejected", "timestamp": "2026-11-08T10:14:37+00:00"}
 ```
 
 **The single worst outcome** — the one I'd least want to explain to a writer
 whose work got caught by it:
 
+FP03. The staff target describes it as careful writing by a non-native English speaker. The service returned guess `ai` at combined score 0.6585, with model score 0.8051 and style score 0.5120. That is an AI label on writing the target presents as human. The stored label says the result does not prove AI was used, and it tells the writer they may request a review. The unsure result exists so the service can admit uncertainty instead of making that accusation. I have not independently verified who wrote the passage. The original text is not stored in the report.
 
+The runner's automatic verdicts do not judge whether an attack succeeded. They only record crashes and server failures, and this run had none. The generated report does not include the original submitted passages. The flood rows tested the 10-per-minute limit. They did not independently test the 200-per-day limit.
 
 ---
 
