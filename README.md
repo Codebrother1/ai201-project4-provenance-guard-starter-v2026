@@ -221,6 +221,30 @@ These blocks are historical test outputs from an earlier run: rerunning `/submit
 
 ---
 
+## Unit 9 — The Capstone
+
+## What This Extends
+
+This capstone extends Provenance Guard, the existing Python/Flask writing-analysis service developed in Units 7 and 8. The proposed Unit 9 extension will strengthen malformed-input handling at the `/submit` endpoint and make validation failures observable through structured rejection logging.
+
+The existing detector combines GPT-2 predictability and stylometric signals, but does not establish authorship. Units 7 and 8 already implemented the scoring and labeling flow, submission and appeal audit records, rate limiting with rejection logging, and the Unit 8 detection-threshold improvement. The additional malformed-text validation, structured validation-rejection records, and capstone instrumentation described below are planned Unit 9 work, not completed functionality.
+
+## The Shape
+
+**Shape B — Harden Against Failure.**
+
+The planned scope is to reject punctuation-only, numbers-only, and control-character-only text before model scoring, while preserving legitimate Unicode-letter writing wherever the existing length requirements permit. Validation failures should produce structured rejection records, and the required capstone instrumentation will measure relevant request behavior. No Unit 9 implementation results or measurements are claimed here.
+
+These decisions are out-of-scope:
+
+1. We will not retrain GPT-2 or change the existing detection thresholds.
+2. We will not rebuild the user interface or rewrite the scoring pipeline.
+3. We will not redesign the appeals system.
+
+Multilingual input acceptance does not imply reliable authorship detection across all languages.
+
+---
+
 ## How I Used AI
 
 **Moment 1**
