@@ -123,6 +123,8 @@ if config.RATE_LIMITING_ENABLED:
             creator_id=payload.get("creator_id", "unknown"),
             reason="rate_limited",
             limit=str(exc.description),
+            request_id=g.get("request_id"),
+            http_status=429,
         )
         return jsonify({
             "error": "rate_limited",
@@ -165,6 +167,27 @@ def health():
 
 
 # ── YOU BUILD THIS ────────────────────────────────────────────────────────────
+
+def _submit_validation_error(reason, message, creator_id="unknown"):
+    if not isinstance(creator_id, str) or not creator_id.strip():
+        creator_id = "unknown"
+    try:
+        audit.log_rejection(
+            creator_id=creator_id,
+            reason=reason,
+            request_id=g.request_id,
+            http_status=400,
+        )
+    except OSError:
+        return jsonify({
+            "error": "audit_write_failed",
+            "message": "The rejection could not be recorded. Please try again.",
+        }), 500
+    return jsonify({
+        "error": "bad_request",
+        "message": message,
+    }), 400
+
 
 @app.post("/submit")
 @limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
@@ -216,51 +239,56 @@ def submit():
     """
     payload = request.get_json(silent=True)
     if not isinstance(payload, dict):
-        return jsonify({
-            "error": "bad_request",
-            "message": "Request body must be a JSON object with text and creator_id.",
-        }), 400
+        return _submit_validation_error(
+            "invalid_json_object",
+            "Request body must be a JSON object with text and creator_id.",
+        )
 
     creator_id = payload.get("creator_id")
     if not isinstance(creator_id, str) or not creator_id.strip():
-        return jsonify({
-            "error": "bad_request",
-            "message": "creator_id must be a non-empty string.",
-        }), 400
+        return _submit_validation_error(
+            "invalid_creator_id",
+            "creator_id must be a non-empty string.",
+        )
 
     text = payload.get("text")
     if not isinstance(text, str) or not text.strip():
-        return jsonify({
-            "error": "bad_request",
-            "message": "text must be a non-empty string.",
-        }), 400
+        return _submit_validation_error(
+            "invalid_text",
+            "text must be a non-empty string.",
+            creator_id,
+        )
 
     word_count = len(text.split())
     if word_count < 3:
-        return jsonify({
-            "error": "bad_request",
-            "message": "text must contain at least 3 words.",
-        }), 400
+        return _submit_validation_error(
+            "text_too_short",
+            "text must contain at least 3 words.",
+            creator_id,
+        )
     if word_count > 300:
-        return jsonify({
-            "error": "bad_request",
-            "message": "text must be 300 words or fewer.",
-        }), 400
+        return _submit_validation_error(
+            "text_too_long",
+            "text must be 300 words or fewer.",
+            creator_id,
+        )
 
     if any(
         unicodedata.category(character) == "Cc" and character not in "\t\n\r"
         for character in text
     ):
-        return jsonify({
-            "error": "bad_request",
-            "message": "text must not contain control characters other than tab, newline, or carriage return.",
-        }), 400
+        return _submit_validation_error(
+            "disallowed_control_character",
+            "text must not contain control characters other than tab, newline, or carriage return.",
+            creator_id,
+        )
 
     if not any(unicodedata.category(character).startswith("L") for character in text):
-        return jsonify({
-            "error": "bad_request",
-            "message": "text must contain at least one Unicode letter.",
-        }), 400
+        return _submit_validation_error(
+            "text_has_no_letters",
+            "text must contain at least one Unicode letter.",
+            creator_id,
+        )
 
     import detector
 
@@ -272,10 +300,11 @@ def submit():
             "message": "The detection model could not be loaded.",
         }), 503
     except ValueError:
-        return jsonify({
-            "error": "bad_request",
-            "message": "The submitted text could not be scored. Please provide a longer writing sample.",
-        }), 400
+        return _submit_validation_error(
+            "invalid_text",
+            "The submitted text could not be scored. Please provide a longer writing sample.",
+            creator_id,
+        )
 
     import stylometry
     import scoring
@@ -296,6 +325,7 @@ def submit():
             combined_score=combined_score,
             label=label,
             status="decided",
+            request_id=g.request_id,
         )
     except OSError:
         return jsonify({
