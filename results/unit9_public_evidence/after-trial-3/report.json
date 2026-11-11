@@ -1,0 +1,1823 @@
+{
+  "phase": "after",
+  "trial": 3,
+  "baseline_kind": "unspecified",
+  "specification_commit": "eb0d981",
+  "report_timestamp": "2026-11-11T10:23:36.977305+00:00",
+  "python": "3.13.3 (v3.13.3:6280bb54784, Apr  8 2025, 10:47:54) [Clang 15.0.0 (clang-1500.3.9.4)]",
+  "rows": [
+    {
+      "case_id": "P01",
+      "criterion": 1,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "5496b9c6-b73e-4106-b011-d21b10ced946",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "5496b9c6-b73e-4106-b011-d21b10ced946",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.099824+00:00",
+          "event": "request_timing",
+          "request_id": "5496b9c6-b73e-4106-b011-d21b10ced946",
+          "duration_ms": 0.30641595367342234,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "P02",
+      "criterion": 1,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "1afb7628-ed1f-49bf-8353-791bee3475c0",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P02",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "1afb7628-ed1f-49bf-8353-791bee3475c0",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.100242+00:00",
+          "event": "request_timing",
+          "request_id": "1afb7628-ed1f-49bf-8353-791bee3475c0",
+          "duration_ms": 0.12445804895833135,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "P03",
+      "criterion": 1,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "a830a67b-a39a-4f2b-a750-ed0b7f7db367",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P03",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "a830a67b-a39a-4f2b-a750-ed0b7f7db367",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.100553+00:00",
+          "event": "request_timing",
+          "request_id": "a830a67b-a39a-4f2b-a750-ed0b7f7db367",
+          "duration_ms": 0.10520895011723042,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "P04",
+      "criterion": 1,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "b34e70dc-602a-4d22-b3c0-c7689a05fa6e",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P04",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "b34e70dc-602a-4d22-b3c0-c7689a05fa6e",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.100830+00:00",
+          "event": "request_timing",
+          "request_id": "b34e70dc-602a-4d22-b3c0-c7689a05fa6e",
+          "duration_ms": 0.09700004011392593,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "P05",
+      "criterion": 1,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "15016fa7-4765-490c-af10-521047885913",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P05",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "15016fa7-4765-490c-af10-521047885913",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.101104+00:00",
+          "event": "request_timing",
+          "request_id": "15016fa7-4765-490c-af10-521047885913",
+          "duration_ms": 0.099916011095047,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "R01",
+      "criterion": 2,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "fc2be8df-a7a3-4973-bf90-32761498cc8d",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"Request body must be a JSON object with text and creator_id.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "unknown",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "invalid_json_object",
+          "request_id": "fc2be8df-a7a3-4973-bf90-32761498cc8d",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.101373+00:00",
+          "event": "request_timing",
+          "request_id": "fc2be8df-a7a3-4973-bf90-32761498cc8d",
+          "duration_ms": 0.10291696526110172,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "R02",
+      "criterion": 2,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "efd508c3-3fd9-49ac-8275-7837c8d5b16c",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"Request body must be a JSON object with text and creator_id.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "unknown",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "invalid_json_object",
+          "request_id": "efd508c3-3fd9-49ac-8275-7837c8d5b16c",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.101630+00:00",
+          "event": "request_timing",
+          "request_id": "efd508c3-3fd9-49ac-8275-7837c8d5b16c",
+          "duration_ms": 0.09116600267589092,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "R03",
+      "criterion": 2,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "057ba048-5966-410c-a0d9-05bcff4dc1e4",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"creator_id must be a non-empty string.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "unknown",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "invalid_creator_id",
+          "request_id": "057ba048-5966-410c-a0d9-05bcff4dc1e4",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.101884+00:00",
+          "event": "request_timing",
+          "request_id": "057ba048-5966-410c-a0d9-05bcff4dc1e4",
+          "duration_ms": 0.0896669807843864,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "R04",
+      "criterion": 2,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "6333bcbb-4280-45d6-9d71-b5e7385a4181",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must be a non-empty string.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-R04",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "invalid_text",
+          "request_id": "6333bcbb-4280-45d6-9d71-b5e7385a4181",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.102135+00:00",
+          "event": "request_timing",
+          "request_id": "6333bcbb-4280-45d6-9d71-b5e7385a4181",
+          "duration_ms": 0.08924998110160232,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "R05",
+      "criterion": 2,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "f4e06c30-988f-4180-b5ea-233ef9f1eee5",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-R05",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "f4e06c30-988f-4180-b5ea-233ef9f1eee5",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.102390+00:00",
+          "event": "request_timing",
+          "request_id": "f4e06c30-988f-4180-b5ea-233ef9f1eee5",
+          "duration_ms": 0.09304203558713198,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "W01",
+      "criterion": 3,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "62bf299b-6fbe-4e52-bd70-afcfd9073754",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"ea729cda-bacf-42ac-a323-832cf668cf75\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('I enjoyed walking beside the river this morning.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('I enjoyed walking beside the river this morning.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "ea729cda-bacf-42ac-a323-832cf668cf75",
+          "creator_id": "u9-W01",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "62bf299b-6fbe-4e52-bd70-afcfd9073754"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.102741+00:00",
+          "event": "request_timing",
+          "request_id": "62bf299b-6fbe-4e52-bd70-afcfd9073754",
+          "duration_ms": 0.1604999997653067,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "W02",
+      "criterion": 3,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "5d286923-fb02-44a7-8729-a892ce14aed2",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"22d15d60-138b-4513-87ae-b11c9e1edfcd\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('My notes describe the garden.\\n\\tThe flowers opened after the rain.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('My notes describe the garden.\\n\\tThe flowers opened after the rain.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "22d15d60-138b-4513-87ae-b11c9e1edfcd",
+          "creator_id": "u9-W02",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "5d286923-fb02-44a7-8729-a892ce14aed2"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.103058+00:00",
+          "event": "request_timing",
+          "request_id": "5d286923-fb02-44a7-8729-a892ce14aed2",
+          "duration_ms": 0.1218329998664558,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "W03",
+      "criterion": 3,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "c35213ce-a327-49cb-8c9f-c0b8e0242ed6",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"afb8df22-5d42-4d3e-aaca-8cbf7109c88c\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "afb8df22-5d42-4d3e-aaca-8cbf7109c88c",
+          "creator_id": "u9-W03",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "c35213ce-a327-49cb-8c9f-c0b8e0242ed6"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.103350+00:00",
+          "event": "request_timing",
+          "request_id": "c35213ce-a327-49cb-8c9f-c0b8e0242ed6",
+          "duration_ms": 0.11816597543656826,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "W04",
+      "criterion": 3,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "d28c189c-5294-4f7d-9538-4cbb9c4a8cba",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"7241c7d7-f7de-47af-aafd-eb02e54d70bb\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "7241c7d7-f7de-47af-aafd-eb02e54d70bb",
+          "creator_id": "u9-W04",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "d28c189c-5294-4f7d-9538-4cbb9c4a8cba"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.103636+00:00",
+          "event": "request_timing",
+          "request_id": "d28c189c-5294-4f7d-9538-4cbb9c4a8cba",
+          "duration_ms": 0.11199997970834374,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "W05",
+      "criterion": 3,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "2eeaa2cb-adcd-4410-8081-a05c44640d6d",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"3f88ae26-f58e-4735-bdb8-0aeca992878e\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('Jo\u00e3o escreveu sobre a experi\u00eancia de conhecer uma cidade hist\u00f3rica.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('Jo\u00e3o escreveu sobre a experi\u00eancia de conhecer uma cidade hist\u00f3rica.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "3f88ae26-f58e-4735-bdb8-0aeca992878e",
+          "creator_id": "u9-W05",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "2eeaa2cb-adcd-4410-8081-a05c44640d6d"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.103911+00:00",
+          "event": "request_timing",
+          "request_id": "2eeaa2cb-adcd-4410-8081-a05c44640d6d",
+          "duration_ms": 0.11012499453499913,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "227df4bf-d9bd-4032-92ca-9be43ada776f",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-N01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "227df4bf-d9bd-4032-92ca-9be43ada776f",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.104162+00:00",
+          "event": "request_timing",
+          "request_id": "227df4bf-d9bd-4032-92ca-9be43ada776f",
+          "duration_ms": 0.08808303391560912,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "N02",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "e9f5f8a9-1b68-4d15-b3ba-64f8e61eb161",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-N02",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "e9f5f8a9-1b68-4d15-b3ba-64f8e61eb161",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.104427+00:00",
+          "event": "request_timing",
+          "request_id": "e9f5f8a9-1b68-4d15-b3ba-64f8e61eb161",
+          "duration_ms": 0.09175000013783574,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "N03",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "34548b3a-9153-4fec-9350-2a54abfa919b",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-N03",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "34548b3a-9153-4fec-9350-2a54abfa919b",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.104673+00:00",
+          "event": "request_timing",
+          "request_id": "34548b3a-9153-4fec-9350-2a54abfa919b",
+          "duration_ms": 0.08962495485320687,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "C01",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "63a6b784-3118-4b34-a21b-237a683070d1",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must not contain control characters other than tab, newline, or carriage return.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-C01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "disallowed_control_character",
+          "request_id": "63a6b784-3118-4b34-a21b-237a683070d1",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.104916+00:00",
+          "event": "request_timing",
+          "request_id": "63a6b784-3118-4b34-a21b-237a683070d1",
+          "duration_ms": 0.08641701424494386,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "C02",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "edac1acf-b248-4614-8e63-31bb0f81bfa6",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must not contain control characters other than tab, newline, or carriage return.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-C02",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "disallowed_control_character",
+          "request_id": "edac1acf-b248-4614-8e63-31bb0f81bfa6",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.105158+00:00",
+          "event": "request_timing",
+          "request_id": "edac1acf-b248-4614-8e63-31bb0f81bfa6",
+          "duration_ms": 0.08625001646578312,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "C03",
+      "criterion": 4,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "05941056-d145-4f08-82e1-8c2e264e7641",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must not contain control characters other than tab, newline, or carriage return.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-C03",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "disallowed_control_character",
+          "request_id": "05941056-d145-4f08-82e1-8c2e264e7641",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.105408+00:00",
+          "event": "request_timing",
+          "request_id": "05941056-d145-4f08-82e1-8c2e264e7641",
+          "duration_ms": 0.09133300045505166,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "T01",
+      "criterion": 5,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "aa33ed1f-e5e8-4d46-81d1-cbc2a3eccd17",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"f494fa2a-58ed-481b-847d-d76c0bbd8bd1\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('I enjoyed walking beside the river this morning.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('I enjoyed walking beside the river this morning.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "f494fa2a-58ed-481b-847d-d76c0bbd8bd1",
+          "creator_id": "u9-W01",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "aa33ed1f-e5e8-4d46-81d1-cbc2a3eccd17"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.105685+00:00",
+          "event": "request_timing",
+          "request_id": "aa33ed1f-e5e8-4d46-81d1-cbc2a3eccd17",
+          "duration_ms": 0.11483300477266312,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "T02",
+      "criterion": 5,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "5016a622-51b8-4f91-972b-918c8807654d",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"d4154381-99b2-4ef1-94c5-5f2ad491224f\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "d4154381-99b2-4ef1-94c5-5f2ad491224f",
+          "creator_id": "u9-W03",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "5016a622-51b8-4f91-972b-918c8807654d"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.105974+00:00",
+          "event": "request_timing",
+          "request_id": "5016a622-51b8-4f91-972b-918c8807654d",
+          "duration_ms": 0.11612504022195935,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "T03",
+      "criterion": 5,
+      "expected_http_status": 200,
+      "actual_http_status": 200,
+      "request_id": "021cef73-372e-4a1c-9d9e-cfa641b52ec6",
+      "response_body": "{\"confidence\":0.5,\"content_id\":\"8efd60e3-c5f4-4b6a-b888-01c063a8a8fd\",\"guess\":\"unsure\",\"label\":\"Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.\",\"model_score\":0.5,\"style_score\":0.5}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 1,
+        "model_calls": 1,
+        "model_call_args": [
+          "call('Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n.')"
+        ],
+        "model_arguments_match": true,
+        "expected_style_calls": 1,
+        "style_calls": 1,
+        "style_call_args": [
+          "call('Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n.')"
+        ],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 0,
+        "decision": 1,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "content_id": "8efd60e3-c5f4-4b6a-b888-01c063a8a8fd",
+          "creator_id": "u9-W04",
+          "guess": "unsure",
+          "model_score": 0.5,
+          "style_score": 0.5,
+          "combined_score": 0.5,
+          "label": "Our analysis could not confidently determine whether this writing was human-written or AI-generated. Detection tools can make mistakes, and this result is not an accusation. If you disagree, you may request a review.",
+          "status": "decided",
+          "request_id": "021cef73-372e-4a1c-9d9e-cfa641b52ec6"
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.106539+00:00",
+          "event": "request_timing",
+          "request_id": "021cef73-372e-4a1c-9d9e-cfa641b52ec6",
+          "duration_ms": 0.2429999876767397,
+          "outcome": "success",
+          "http_status": 200
+        }
+      ]
+    },
+    {
+      "case_id": "T04",
+      "criterion": 5,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "89f43ad3-4986-40c5-a3f1-58022dd879e1",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-P01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "89f43ad3-4986-40c5-a3f1-58022dd879e1",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.106955+00:00",
+          "event": "request_timing",
+          "request_id": "89f43ad3-4986-40c5-a3f1-58022dd879e1",
+          "duration_ms": 0.13983302051201463,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "T05",
+      "criterion": 5,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "a31f6dbd-8d4d-4afc-983e-06c84b12ca24",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must contain at least one Unicode letter.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-N01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "text_has_no_letters",
+          "request_id": "a31f6dbd-8d4d-4afc-983e-06c84b12ca24",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.107293+00:00",
+          "event": "request_timing",
+          "request_id": "a31f6dbd-8d4d-4afc-983e-06c84b12ca24",
+          "duration_ms": 0.11675001587718725,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    },
+    {
+      "case_id": "T06",
+      "criterion": 5,
+      "expected_http_status": 400,
+      "actual_http_status": 400,
+      "request_id": "9ca68022-da52-4e9b-8107-f562855967cc",
+      "response_body": "{\"error\":\"bad_request\",\"message\":\"text must not contain control characters other than tab, newline, or carriage return.\"}\n",
+      "failures": [],
+      "request_id_header_count": 1,
+      "scoring": {
+        "expected_model_calls": 0,
+        "model_calls": 0,
+        "model_call_args": [],
+        "model_arguments_match": true,
+        "expected_style_calls": 0,
+        "style_calls": 0,
+        "style_call_args": [],
+        "style_arguments_match": true,
+        "model_load_attempts": 0
+      },
+      "audit_counts": {
+        "total": 2,
+        "rejection": 1,
+        "decision": 0,
+        "timing": 1
+      },
+      "matching_audit_records": [
+        {
+          "timestamp": "2026-11-11T10:23:37+00:00",
+          "creator_id": "u9-C01",
+          "event": "rejected",
+          "status": "rejected",
+          "reason": "disallowed_control_character",
+          "request_id": "9ca68022-da52-4e9b-8107-f562855967cc",
+          "http_status": 400
+        },
+        {
+          "timestamp": "2026-11-11T10:23:37.107607+00:00",
+          "event": "request_timing",
+          "request_id": "9ca68022-da52-4e9b-8107-f562855967cc",
+          "duration_ms": 0.11416699271649122,
+          "outcome": "rejected",
+          "http_status": 400
+        }
+      ]
+    }
+  ],
+  "trial_failures": [],
+  "requests_attempted": 27,
+  "measurement_mode": "mocked scoring; application timing events only",
+  "source_sha256": {
+    "criteria.md": "293a1fff9bc23f7bc61da1289844de1fa2a927f277d20d2f270206c6acbd33f3",
+    "app.py": "22f0ca0d009bda77aa7b05ba7ee858b4a507d890f810c1cfac2576d20e1c9055",
+    "audit.py": "405e7bdb2e4eca513fa12320aebda6f5d05d5c10999e69614be0217766f3805c",
+    "config.py": "611242708a5b92fc04f6eefa187bb74f10cef7648a9b5cb1d1d27d98541b9f6b",
+    "detector.py": "220bb755b01321638f770c89d2eba8e59968b2dcaeb3f22ee53ad23c1d735e3a",
+    "stylometry.py": "34fef8ad9a5929e8828a845a843ef73ed8ae2d698bfef51dc1621b7d1fb4c155",
+    "scoring.py": "d06400721324ed40cab075002e3a5a229d44a84ebac5dab416efb0c752e73ae6",
+    "unit9_acceptance.py": "43657afe37f687a0d2494dd4f428eebf0bd20eecc986d3e3c42aa8a9c833fb15"
+  },
+  "flask_version": "3.1.3",
+  "fixtures": [
+    {
+      "case_id": "P01",
+      "criterion": 1,
+      "body": {
+        "creator_id": "u9-P01",
+        "text": "!!! ??? ..."
+      },
+      "expected_creator": "u9-P01",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "P02",
+      "criterion": 1,
+      "body": {
+        "creator_id": "u9-P02",
+        "text": ",,, ;;; :::"
+      },
+      "expected_creator": "u9-P02",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "P03",
+      "criterion": 1,
+      "body": {
+        "creator_id": "u9-P03",
+        "text": "--- ___ ..."
+      },
+      "expected_creator": "u9-P03",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "P04",
+      "criterion": 1,
+      "body": {
+        "creator_id": "u9-P04",
+        "text": "((( ))) [[[]]]"
+      },
+      "expected_creator": "u9-P04",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "P05",
+      "criterion": 1,
+      "body": {
+        "creator_id": "u9-P05",
+        "text": "\u2026 \u2026 \u2026"
+      },
+      "expected_creator": "u9-P05",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "R01",
+      "criterion": 2,
+      "body": "{\"creator_id\":\"u9-R01\",\"text\":",
+      "raw": true,
+      "expected_creator": "unknown",
+      "expected_status": 400,
+      "expected_reason": "invalid_json_object"
+    },
+    {
+      "case_id": "R02",
+      "criterion": 2,
+      "body": [],
+      "raw": false,
+      "expected_creator": "unknown",
+      "expected_status": 400,
+      "expected_reason": "invalid_json_object"
+    },
+    {
+      "case_id": "R03",
+      "criterion": 2,
+      "body": {
+        "text": "I enjoyed walking beside the river this morning."
+      },
+      "raw": false,
+      "expected_creator": "unknown",
+      "expected_status": 400,
+      "expected_reason": "invalid_creator_id"
+    },
+    {
+      "case_id": "R04",
+      "criterion": 2,
+      "body": {
+        "creator_id": "u9-R04"
+      },
+      "raw": false,
+      "expected_creator": "u9-R04",
+      "expected_status": 400,
+      "expected_reason": "invalid_text"
+    },
+    {
+      "case_id": "R05",
+      "criterion": 2,
+      "body": {
+        "creator_id": "u9-R05",
+        "text": "!!! ??? ..."
+      },
+      "raw": false,
+      "expected_creator": "u9-R05",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "W01",
+      "criterion": 3,
+      "body": {
+        "creator_id": "u9-W01",
+        "text": "I enjoyed walking beside the river this morning."
+      },
+      "expected_creator": "u9-W01",
+      "expected_status": 200,
+      "expected_reason": null
+    },
+    {
+      "case_id": "W02",
+      "criterion": 3,
+      "body": {
+        "creator_id": "u9-W02",
+        "text": "My notes describe the garden.\n\tThe flowers opened after the rain."
+      },
+      "expected_creator": "u9-W02",
+      "expected_status": 200,
+      "expected_reason": null
+    },
+    {
+      "case_id": "W03",
+      "criterion": 3,
+      "body": {
+        "creator_id": "u9-W03",
+        "text": "Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier."
+      },
+      "expected_creator": "u9-W03",
+      "expected_status": 200,
+      "expected_reason": null
+    },
+    {
+      "case_id": "W04",
+      "criterion": 3,
+      "body": {
+        "creator_id": "u9-W04",
+        "text": "Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n."
+      },
+      "expected_creator": "u9-W04",
+      "expected_status": 200,
+      "expected_reason": null
+    },
+    {
+      "case_id": "W05",
+      "criterion": 3,
+      "body": {
+        "creator_id": "u9-W05",
+        "text": "Jo\u00e3o escreveu sobre a experi\u00eancia de conhecer uma cidade hist\u00f3rica."
+      },
+      "expected_creator": "u9-W05",
+      "expected_status": 200,
+      "expected_reason": null
+    },
+    {
+      "case_id": "N01",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-N01",
+        "text": "123 456 789"
+      },
+      "expected_creator": "u9-N01",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "N02",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-N02",
+        "text": "000 42 9000"
+      },
+      "expected_creator": "u9-N02",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "N03",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-N03",
+        "text": "\u0661\u0662\u0663 \u0664\u0665\u0666 \u0667\u0668\u0669"
+      },
+      "expected_creator": "u9-N03",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters"
+    },
+    {
+      "case_id": "C01",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-C01",
+        "text": "\u0000 \u0000 \u0000"
+      },
+      "expected_creator": "u9-C01",
+      "expected_status": 400,
+      "expected_reason": "disallowed_control_character"
+    },
+    {
+      "case_id": "C02",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-C02",
+        "text": "\u0001 \u0002 \u0003"
+      },
+      "expected_creator": "u9-C02",
+      "expected_status": 400,
+      "expected_reason": "disallowed_control_character"
+    },
+    {
+      "case_id": "C03",
+      "criterion": 4,
+      "body": {
+        "creator_id": "u9-C03",
+        "text": "\u007f \u007f \u007f"
+      },
+      "expected_creator": "u9-C03",
+      "expected_status": 400,
+      "expected_reason": "disallowed_control_character"
+    },
+    {
+      "case_id": "T01",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-W01",
+        "text": "I enjoyed walking beside the river this morning."
+      },
+      "expected_creator": "u9-W01",
+      "expected_status": 200,
+      "expected_reason": null,
+      "reuses": "W01"
+    },
+    {
+      "case_id": "T02",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-W03",
+        "text": "Apr\u00e8s le d\u00e9jeuner, \u00c9lodie a visit\u00e9 le mus\u00e9e du quartier."
+      },
+      "expected_creator": "u9-W03",
+      "expected_status": 200,
+      "expected_reason": null,
+      "reuses": "W03"
+    },
+    {
+      "case_id": "T03",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-W04",
+        "text": "Mar\u00eda escribi\u00f3 una reflexi\u00f3n sobre la educaci\u00f3n y la comunicaci\u00f3n."
+      },
+      "expected_creator": "u9-W04",
+      "expected_status": 200,
+      "expected_reason": null,
+      "reuses": "W04"
+    },
+    {
+      "case_id": "T04",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-P01",
+        "text": "!!! ??? ..."
+      },
+      "expected_creator": "u9-P01",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters",
+      "reuses": "P01"
+    },
+    {
+      "case_id": "T05",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-N01",
+        "text": "123 456 789"
+      },
+      "expected_creator": "u9-N01",
+      "expected_status": 400,
+      "expected_reason": "text_has_no_letters",
+      "reuses": "N01"
+    },
+    {
+      "case_id": "T06",
+      "criterion": 5,
+      "body": {
+        "creator_id": "u9-C01",
+        "text": "\u0000 \u0000 \u0000"
+      },
+      "expected_creator": "u9-C01",
+      "expected_status": 400,
+      "expected_reason": "disallowed_control_character",
+      "reuses": "C01"
+    }
+  ],
+  "fixture_sha256": "29df92b63e9d5cdaed8f944f893971cb11cb53714da691b0c654dc27286ac336",
+  "provenance": {
+    "approved_criteria_commit": "eb0d981ecb685695c0c795c12819f5f27dd907d8",
+    "tested_git_revision": "862897af1c4e9bd1ca2d673a25473d936533da61",
+    "working_tree_status": "?? attack_set/\n?? legal-agent-workshop/\n?? results/unit9_acceptance/\n",
+    "working_tree_capture": "Before requests; output directory reserved.",
+    "unstaged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "approved_specification_sha256": "293a1fff9bc23f7bc61da1289844de1fa2a927f277d20d2f270206c6acbd33f3",
+    "current_specification_sha256": "293a1fff9bc23f7bc61da1289844de1fa2a927f277d20d2f270206c6acbd33f3",
+    "approved_config_source_sha256": "611242708a5b92fc04f6eefa187bb74f10cef7648a9b5cb1d1d27d98541b9f6b",
+    "approved_fixture_sha256": "29df92b63e9d5cdaed8f944f893971cb11cb53714da691b0c654dc27286ac336",
+    "current_fixture_sha256": "29df92b63e9d5cdaed8f944f893971cb11cb53714da691b0c654dc27286ac336",
+    "approved_targets": {
+      "1": [
+        "Punctuation-only validation",
+        5
+      ],
+      "2": [
+        "Structured rejection logging",
+        5
+      ],
+      "3": [
+        "Legitimate-writing preservation",
+        5
+      ],
+      "4": [
+        "Numbers/control-character rejection",
+        6
+      ],
+      "5": [
+        "Request-timing instrumentation",
+        6
+      ]
+    },
+    "approved_application_configuration": {
+      "HUMAN_THRESHOLD": 0.35,
+      "AI_THRESHOLD": 0.72,
+      "WEIGHT_MODEL_SIGNAL": 0.5,
+      "WEIGHT_STYLE_SIGNAL": 0.5,
+      "DETECTOR_MODEL": "gpt2",
+      "DETECTOR_MAX_TOKENS": 400,
+      "RATE_LIMITING_ENABLED": false
+    },
+    "observed_application_configuration": {
+      "HUMAN_THRESHOLD": 0.35,
+      "AI_THRESHOLD": 0.72,
+      "WEIGHT_MODEL_SIGNAL": 0.5,
+      "WEIGHT_STYLE_SIGNAL": 0.5,
+      "DETECTOR_MODEL": "gpt2",
+      "DETECTOR_MAX_TOKENS": 400,
+      "RATE_LIMITING_ENABLED": false
+    },
+    "approved_test_configuration": {
+      "AI201_RATE_LIMITS": "0",
+      "TESTING": true,
+      "DEBUG": false,
+      "PROPAGATE_EXCEPTIONS": false,
+      "model_mock_return": 0.5,
+      "style_mock_return": 0.5
+    },
+    "observed_test_configuration": {
+      "AI201_RATE_LIMITS": "0",
+      "TESTING": true,
+      "DEBUG": false,
+      "PROPAGATE_EXCEPTIONS": false,
+      "model_mock_return": 0.5,
+      "style_mock_return": 0.5
+    },
+    "isolated_audit_paths": {
+      "LOG_DIR": "[REDACTED_TEMP_PATH]",
+      "AUDIT_LOG": "[REDACTED_TEMP_PATH]"
+    }
+  },
+  "provenance_checks": {
+    "approved_commit": {
+      "verified": true,
+      "detail": "Expected eb0d981ecb685695c0c795c12819f5f27dd907d8; resolved eb0d981ecb685695c0c795c12819f5f27dd907d8."
+    },
+    "approved_criteria_object": {
+      "verified": true,
+      "detail": "Expected SHA-256 293a1fff9bc23f7bc61da1289844de1fa2a927f277d20d2f270206c6acbd33f3; got 293a1fff9bc23f7bc61da1289844de1fa2a927f277d20d2f270206c6acbd33f3."
+    },
+    "current_criteria_bytes": {
+      "verified": true,
+      "detail": "Current criteria.md must byte-match the approved Git object."
+    },
+    "approved_config_object": {
+      "verified": true,
+      "detail": "The committed configuration reference must match its pinned SHA-256."
+    },
+    "frozen_fixtures": {
+      "verified": true,
+      "detail": "All 27 bodies, IDs, creators, outcomes and reasons must match committed tables."
+    },
+    "criterion_targets": {
+      "verified": true,
+      "detail": "Criterion names and targets must match the committed criteria."
+    },
+    "configuration.HUMAN_THRESHOLD": {
+      "verified": true,
+      "detail": "Expected 0.35; observed 0.35."
+    },
+    "configuration.AI_THRESHOLD": {
+      "verified": true,
+      "detail": "Expected 0.72; observed 0.72."
+    },
+    "configuration.WEIGHT_MODEL_SIGNAL": {
+      "verified": true,
+      "detail": "Expected 0.5; observed 0.5."
+    },
+    "configuration.WEIGHT_STYLE_SIGNAL": {
+      "verified": true,
+      "detail": "Expected 0.5; observed 0.5."
+    },
+    "configuration.DETECTOR_MODEL": {
+      "verified": true,
+      "detail": "Expected 'gpt2'; observed 'gpt2'."
+    },
+    "configuration.DETECTOR_MAX_TOKENS": {
+      "verified": true,
+      "detail": "Expected 400; observed 400."
+    },
+    "configuration.RATE_LIMITING_ENABLED": {
+      "verified": true,
+      "detail": "Expected False; observed False."
+    },
+    "test_configuration.AI201_RATE_LIMITS": {
+      "verified": true,
+      "detail": "Expected '0'; observed '0'."
+    },
+    "test_configuration.TESTING": {
+      "verified": true,
+      "detail": "Expected True; observed True."
+    },
+    "test_configuration.DEBUG": {
+      "verified": true,
+      "detail": "Expected False; observed False."
+    },
+    "test_configuration.PROPAGATE_EXCEPTIONS": {
+      "verified": true,
+      "detail": "Expected False; observed False."
+    },
+    "test_configuration.model_mock_return": {
+      "verified": true,
+      "detail": "Expected 0.5; observed 0.5."
+    },
+    "test_configuration.style_mock_return": {
+      "verified": true,
+      "detail": "Expected 0.5; observed 0.5."
+    },
+    "isolated_audit_paths": {
+      "verified": true,
+      "detail": "Both audit paths must point to this trial's dedicated temporary destination."
+    }
+  },
+  "audit_temporary_directory": "[REDACTED_TEMP_AUDIT_DIRECTORY]",
+  "scoring_configuration": {
+    "HUMAN_THRESHOLD": 0.35,
+    "AI_THRESHOLD": 0.72,
+    "WEIGHT_MODEL_SIGNAL": 0.5,
+    "WEIGHT_STYLE_SIGNAL": 0.5
+  },
+  "audit_record_count": 54,
+  "audit_file_created": true,
+  "audit_archived": true,
+  "criteria": {
+    "1": {
+      "name": "Punctuation-only validation",
+      "target": 5,
+      "fixtures_without_failures": 5,
+      "verdict": "MET"
+    },
+    "2": {
+      "name": "Structured rejection logging",
+      "target": 5,
+      "fixtures_without_failures": 5,
+      "verdict": "MET"
+    },
+    "3": {
+      "name": "Legitimate-writing preservation",
+      "target": 5,
+      "fixtures_without_failures": 5,
+      "verdict": "MET"
+    },
+    "4": {
+      "name": "Numbers/control-character rejection",
+      "target": 6,
+      "fixtures_without_failures": 6,
+      "verdict": "MET"
+    },
+    "5": {
+      "name": "Request-timing instrumentation",
+      "target": 6,
+      "fixtures_without_failures": 6,
+      "verdict": "MET"
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,63 @@
+Unit 9 before trial 1
+Baseline designation: instrumented
+Mocked acceptance evidence only; not real GPT-2 performance or cost.
+Requests attempted: 27/27
+Criterion 1: MET (5/5 fixtures without fixture-level failures; trial-level failures also apply)
+Criterion 2: MET (5/5 fixtures without fixture-level failures; trial-level failures also apply)
+Criterion 3: MET (5/5 fixtures without fixture-level failures; trial-level failures also apply)
+Criterion 4: MET (6/6 fixtures without fixture-level failures; trial-level failures also apply)
+Criterion 5: MET (6/6 fixtures without fixture-level failures; trial-level failures also apply)
+P01: HTTP expected=400 actual=400; request_id=edf4dbad-5e20-4f28-b728-12952269dd35; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+P02: HTTP expected=400 actual=400; request_id=5fd49ad5-bc48-4665-be17-8f3ae412bf20; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+P03: HTTP expected=400 actual=400; request_id=cecf9b1b-e07e-4c7a-9c05-87a64ef6db04; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+P04: HTTP expected=400 actual=400; request_id=99e8218c-d5d8-4b45-9cbf-059dc77f9adb; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+P05: HTTP expected=400 actual=400; request_id=088c76cc-57c5-48e2-9527-16f791ce02f2; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+R01: HTTP expected=400 actual=400; request_id=e06306a0-31af-42b3-bfaf-490223ff0f57; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+R02: HTTP expected=400 actual=400; request_id=da7a30e0-94df-45f9-b2ef-dc5ed7c7c405; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+R03: HTTP expected=400 actual=400; request_id=f3e4101f-1724-4b89-9a69-5795c4802d4b; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+R04: HTTP expected=400 actual=400; request_id=e3a7f892-e0f5-4c0e-90cb-6f8dc65b64e0; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+R05: HTTP expected=400 actual=400; request_id=480e4dd6-a833-43f0-bfd2-4cecc014a8a0; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+W01: HTTP expected=200 actual=200; request_id=2be72882-adcb-4b72-b761-3a8a16107c73; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+W02: HTTP expected=200 actual=200; request_id=cb4994da-9a85-46a6-94f9-2517cb206c32; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+W03: HTTP expected=200 actual=200; request_id=25bb73c4-3662-40fa-92bf-80780e3e27e0; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+W04: HTTP expected=200 actual=200; request_id=e9f3ffcc-6f2d-4dcc-8592-11b78503ccc6; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+W05: HTTP expected=200 actual=200; request_id=c46196f4-0b9a-48e1-b3d4-b3ef0c547250; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+N01: HTTP expected=400 actual=400; request_id=23f3950d-489e-49b2-af3d-77e6f8e82c09; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+N02: HTTP expected=400 actual=400; request_id=6fcf3389-e435-41c4-a6ab-60b1ca586203; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+N03: HTTP expected=400 actual=400; request_id=d146cb79-860c-4b78-8043-8e1e7e988436; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+C01: HTTP expected=400 actual=400; request_id=89db8834-9287-49ee-a1a5-29acf5a8115d; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+C02: HTTP expected=400 actual=400; request_id=7bac62df-b2b6-4c32-81c5-13b5b64dbb6b; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+C03: HTTP expected=400 actual=400; request_id=a7c2ce85-4ac4-4547-90cb-6ad09a3b0133; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T01: HTTP expected=200 actual=200; request_id=d43a2930-ad49-46b3-b631-7a229af27a35; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T02: HTTP expected=200 actual=200; request_id=5c62ed48-4242-4017-83b9-57b86e7b5462; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T03: HTTP expected=200 actual=200; request_id=72d976dd-202c-49ad-8aa6-1404f7f79abb; model=1/1, style=1/1; audit={'total': 2, 'rejection': 0, 'decision': 1, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T04: HTTP expected=400 actual=400; request_id=fbcad1b1-e12c-4e21-990c-7a92ab9b32b2; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T05: HTTP expected=400 actual=400; request_id=1cd891b5-8859-4fc3-8067-44860b7ce68c; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
+T06: HTTP expected=400 actual=400; request_id=b6069b04-b20f-42e8-ad0e-f7b91c8085fb; model=0/0, style=0/0; audit={'total': 2, 'rejection': 1, 'decision': 0, 'timing': 1}
+  Original-text arguments: model=True, style=True
