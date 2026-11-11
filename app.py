@@ -24,8 +24,11 @@ Routes:
     GET  /health      is the service up, and is the model loaded
 """
 
+import math
+import time
 import unicodedata
 import uuid
+from datetime import datetime, timezone
 
 from flask import Flask, g, jsonify, request
 
@@ -38,6 +41,7 @@ app = Flask(__name__)
 @app.before_request
 def initialize_submit_request_id():
     if request.method == "POST" and request.path == "/submit":
+        g.submit_start_time = time.perf_counter()
         g.request_id = str(uuid.uuid4())
 
 
@@ -47,6 +51,36 @@ def attach_submit_request_id(response):
         request_id = g.get("request_id")
         if request_id is not None:
             response.headers["X-Request-ID"] = request_id
+        if not g.get("submit_timing_attempted", False):
+            g.submit_timing_attempted = True
+            try:
+                duration_ms = (time.perf_counter() - g.get("submit_start_time")) * 1000
+                if request_id is None or not math.isfinite(duration_ms) or duration_ms < 0:
+                    raise ValueError("Missing request ID or invalid request duration.")
+                http_status = response.status_code
+                if 200 <= http_status < 300:
+                    outcome = "success"
+                elif 400 <= http_status < 500:
+                    outcome = "rejected"
+                elif 500 <= http_status < 600:
+                    outcome = "error"
+                else:
+                    outcome = "other"
+                audit._append({
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "event": "request_timing",
+                    "request_id": request_id,
+                    "duration_ms": duration_ms,
+                    "outcome": outcome,
+                    "http_status": http_status,
+                })
+            except (OSError, TypeError, ValueError):
+                # Timing failures must not replace the original response or retry writes.
+                app.logger.error(
+                    "Request timing could not be persisted for request_id=%s, http_status=%s.",
+                    request_id,
+                    response.status_code,
+                )
     return response
 
 
