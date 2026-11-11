@@ -350,30 +350,37 @@ redirects audit writes away from historical logs, then archives trial evidence.
 **These acceptance checks do not load GPT-2 and do not measure GPT-2 inference
 cost, accuracy, or latency.** Their application timing records describe mocked
 request handling. Normal manual `/submit` requests are real-model runs instead.
+Separate real-model timing methods and limitations are documented in
+[results/unit9_cost_report.md](results/unit9_cost_report.md).
 
 Three official before-improvement trials and three official after-improvement
 trials have already been executed and verified. Each attempted 27 requests;
 all five criteria were MET in every trial, with zero trial-level failures.
 The before trials were an **instrumented baseline**, not untouched Unit 8.
 
-The six official archives currently exist only in this local working directory
-under `results/unit9_acceptance/`. They have not been committed or pushed to
-GitHub, so a fresh GitHub checkout does not contain them. The local archives are:
+The six **original** official trial archives remain local and untracked under
+`results/unit9_acceptance/`; those originals have not been committed or pushed.
+Privacy-reviewed **publication copies** have been committed and pushed under
+`results/unit9_public_evidence/` and are available in fresh GitHub clones:
 
-- `results/unit9_acceptance/before-trial-1/`
-- `results/unit9_acceptance/before-trial-2/`
-- `results/unit9_acceptance/before-trial-3/`
-- `results/unit9_acceptance/after-trial-1/`
-- `results/unit9_acceptance/after-trial-2/`
-- `results/unit9_acceptance/after-trial-3/`
+- `results/unit9_public_evidence/before-trial-1/`
+- `results/unit9_public_evidence/before-trial-2/`
+- `results/unit9_public_evidence/before-trial-3/`
+- `results/unit9_public_evidence/after-trial-1/`
+- `results/unit9_public_evidence/after-trial-2/`
+- `results/unit9_public_evidence/after-trial-3/`
 
-Each contains `report.json`, `summary.txt`, and `audit.jsonl`. Inspect the
-existing evidence without executing a new trial:
+Each published folder contains `report.json`, `summary.txt`, and `audit.jsonl`.
+The published summaries and audit files were byte-verified against the originals.
+Only temporary absolute paths in copied report metadata were replaced with
+placeholders; see the [publication details](results/unit9_public_evidence/README.md).
+From a fresh checkout with its virtual environment set up, inspect these copies
+without executing a new trial:
 
 ```bash
-cat results/unit9_acceptance/after-trial-1/summary.txt
-.venv/bin/python -m json.tool results/unit9_acceptance/after-trial-1/report.json
-cat results/unit9_acceptance/after-trial-1/audit.jsonl
+cat results/unit9_public_evidence/after-trial-1/summary.txt
+.venv/bin/python -m json.tool results/unit9_public_evidence/after-trial-1/report.json
+cat results/unit9_public_evidence/after-trial-1/audit.jsonl
 .venv/bin/python unit9_acceptance.py --help
 ```
 
@@ -384,10 +391,13 @@ inspect their existing files. `--help` shows CLI options without importing the
 application, sending requests, or creating a trial archive.
 
 **Never overwrite, delete, or casually rerun an official trial archive.**
-All six phase/trial combinations are occupied, and the harness refuses existing
-directories. Do not remove or rename archives to bypass that protection.
-Any new reproduction run requires an explicitly reviewed evidence-isolation
-plan; this guide deliberately supplies no command that reuses an occupied slot.
+All six official phase/trial identities have already been used. Inspecting
+published copies is not re-executing trials. The harness refuses existing output
+directories, but a fresh clone lacks the untracked original directories; that
+absence is not permission to reuse an official identity. Do not remove or rename
+archives to bypass protection. Any new reproduction run requires an explicitly
+reviewed evidence-isolation plan; this guide deliberately supplies no command
+that reuses an occupied official slot.
 
 The evidence-based additional improvement was detector-unavailability audit
 logging, commit `862897a`. Separate mocked `DetectorUnavailable` checks found
@@ -395,8 +405,10 @@ zero structured detector-failure records before and one afterward, preserving
 HTTP 503 and request correlation. A separate audit-write `OSError` check
 returned HTTP 500 `audit_write_failed`. Those fault-injection checks are distinct
 from the frozen 27-request trials; do not attribute their coverage to the five
-criteria. Unit 9 history comprises eight pushed commits. No new tests or
-measurements are implied by these documentation instructions.
+criteria. As of commit `975cff7`, **12 meaningful Unit 9 commits** have been
+pushed to `origin/main`. That milestone does not imply this later documentation
+edit is already committed or pushed. No new tests or measurements are implied
+by these documentation instructions.
 
 ---
 
@@ -416,7 +428,7 @@ measurements are implied by these documentation instructions.
 | `criteria.md` | Preserved Unit 7/8 criteria and frozen Unit 9 criteria/fixtures |
 | `unit9_acceptance.py` | Mocked, isolated Unit 9 acceptance harness with provenance checks |
 | `logs/audit.jsonl` | Normal append-only audit history; review privacy before sharing |
-| `results/` | Historical evidence and preserved Unit 9 trial archives; selectively review before staging |
+| `results/` | Historical results, committed privacy-reviewed Unit 9 publication evidence, and separately preserved untracked local originals; selectively review before staging |
 
 ---
 
