@@ -223,29 +223,106 @@ These blocks are historical test outputs from an earlier run: rerunning `/submit
 
 ## Unit 9 — The Capstone
 
-## What This Extends
+### What This Extends
 
-This capstone extends Provenance Guard, the existing Python/Flask writing-analysis service developed in Units 7 and 8. The proposed Unit 9 extension will strengthen malformed-input handling at the `/submit` endpoint and make validation failures observable through structured rejection logging.
+I extended Provenance Guard, the Python/Flask writing-analysis service I developed in Units 7 and 8. It combines real GPT-2 predictability and stylometric signals, but neither the signals nor their combined label establishes authorship.
 
-The existing detector combines GPT-2 predictability and stylometric signals, but does not establish authorship. Units 7 and 8 already implemented the scoring and labeling flow, submission and appeal audit records, rate limiting with rejection logging, and the Unit 8 detection-threshold improvement. The additional malformed-text validation, structured validation-rejection records, and capstone instrumentation described below are planned Unit 9 work, not completed functionality.
+Units 7 and 8 supplied scoring, reader-facing labels, submission and appeal audit records, rate limiting, and the historical threshold improvement. In Unit 9, I added malformed-text validation before scoring, structured validation-rejection records, server-generated request IDs, and request timing. I then used separate failure evidence to add structured detector-unavailability logging. The Unit 7/8 transcripts and results below remain historical evidence, not new runs of the capstone.
 
-## The Shape
+### The Shape
 
 **Shape B — Harden Against Failure.**
 
-The planned scope is to reject punctuation-only, numbers-only, and control-character-only text before model scoring, while preserving legitimate Unicode-letter writing wherever the existing length requirements permit. Validation failures should produce structured rejection records, and the required capstone instrumentation will measure relevant request behavior. No Unit 9 implementation results or measurements are claimed here.
+I chose to reject punctuation-only, numbers-only, and disallowed-control-character text rather than give meaningless input a detection label. `/submit` retains its nonempty creator ID requirement and 3–300 whitespace-token rule. After those checks, it rejects Unicode category `Cc` controls except ordinary tab, newline, and carriage return, then requires at least one Unicode letter. Both checks happen before model scoring.
 
-These decisions are out-of-scope:
+The fixed English and accented Latin-script samples reach scoring; the malformed fixtures return HTTP 400 without detection results or calls to `detector.model_signal`. Those observations come from the mocked acceptance checks described below, not a universal language evaluation. Multilingual input acceptance does not imply reliable authorship detection across all languages.
 
-1. We will not retrain GPT-2 or change the existing detection thresholds.
-2. We will not rebuild the user interface or rewrite the scoring pipeline.
-3. We will not redesign the appeals system.
+I kept the scope narrow: no GPT-2 retraining, detection-threshold or scoring-weight changes, UI rebuild, scoring-pipeline rewrite, or appeals redesign. The Unit 8 threshold increase is not the Unit 9 improvement.
 
-Multilingual input acceptance does not imply reliable authorship detection across all languages.
+### Running It
 
----
+I used **Path B — reproducible local operation with logs**, not a claim of successful free-tier deployment. [RUNNING.md](RUNNING.md) contains the macOS/Linux setup, explicit `.venv/bin/python` commands, local server and real-model examples, and instructions for inspecting existing acceptance evidence.
 
-## How I Used AI
+Normal valid `/submit` requests use real GPT-2. The local server defaults to `127.0.0.1:5000`; the model may download approximately 550 MB on first use. That is a disk/cache transfer size, not measured RAM. The model and PyTorch runtime make memory-constrained hosting a concern, and I have not demonstrated public-hosting capacity.
+
+The acceptance harness, `unit9_acceptance.py`, instead uses Flask's in-process test client with both `detector.model_signal` and `stylometry.style_signal` mocked. Validation, routing, signal combination, labeling, structured auditing, and timing remain real. Rate limiting is disabled only in the isolated acceptance process, and audit writes are redirected away from historical logs. These checks do not load GPT-2 or measure its inference speed, cost, or authorship accuracy.
+
+### Instrumentation
+
+Each `POST /submit` gets a server-generated UUID returned in `X-Request-ID`, including validation and normally finalized error responses. I use that ID to correlate the HTTP response with business audit and timing records rather than matching timestamps or creator IDs.
+
+Records normally append to `logs/audit.jsonl`, with one JSON object per line:
+
+- **Decision:** UTC timestamp, content/creator IDs, scores, label, status `decided`, and request ID. The existing decision format has no `event` or HTTP-status field.
+- **Rejection:** UTC timestamp, `event="rejected"`, `status="rejected"`, reason, creator ID or `"unknown"`, request ID, and `http_status`. Validation rejections use 400, rate-limit rejections use 429, and detector-unavailability rejections use 503.
+- **Timing:** UTC timestamp, `event="request_timing"`, request ID, actual `http_status`, finite numeric nonnegative `duration_ms`, and `outcome`: `success` for 2xx, `rejected` for 4xx, or `error` for 5xx (`other` for other status classes).
+
+Business records and timing records are separate. Rejection and timing records do not intentionally store raw submitted text or complete request bodies. Appeal reasoning can still contain private information, so logs require review before sharing.
+
+`time.perf_counter()` starts near the beginning of the `/submit` `before_request` hook and is sampled during `after_request` response preparation. This includes validation, scoring when reached, and business audit writes; it excludes earlier Flask setup, the timing-record write, subsequent finalization, transmission, and teardown. It is not complete WSGI-entry-to-client latency. A timing-write failure goes to the application error logger without silently claiming persistence or replacing the original response.
+
+### What It Costs
+
+I measured real-model processing separately from the mocked acceptance trials. Both informal local measurement series used `time.perf_counter()`, cached GPT-2 with downloads disabled, and the same English sample. Each series had one initially unloaded-model call/request and three warm observations.
+
+| Real-model measurement | First call/request, model initially unloaded | Median of the three warm observations |
+|---|---:|---:|
+| Detector only | 4.365 seconds | 0.052 seconds |
+| Full Flask test-client `/submit` route | 3.727 seconds | 0.051 seconds |
+
+All four route requests returned HTTP 200 with `X-Request-ID`; their isolated audit contained four decisions and four timing records. The detector-only timings are not full application timings, and in-process route timings are not deployed network latency.
+
+For 100 comparable sequential submissions in one long-lived process, assuming one cold request and 99 warm requests, my projection is `3.727 + (99 * 0.051) = 8.776 seconds` total application processing time, or `0.08776 seconds per submission`. **This projects from four measured HTTP test-client requests; it is not a measurement of 100 requests.** Input length/content, system load, cache state, restarts, cold starts, and concurrency can change the outcome.
+
+Local GPT-2 requires no paid hosted inference API or API key. I did not measure electricity, RAM, hardware costs, or dollar operating cost; I do not claim total cost is exactly $0. See the [full cost report](results/unit9_cost_report.md) for all individual observations, the exact sample, environment information, methodology, and limitations.
+
+### Run Log
+
+The [frozen Unit 9 criteria and fixtures](criteria.md#unit-9--capstone-acceptance-criteria-and-frozen-fixtures) were approved at commit `eb0d981`. The five targets are:
+
+1. Punctuation-only validation: 5/5.
+2. Structured rejection logging: 5/5.
+3. Legitimate-writing preservation: 5/5.
+4. Numbers/control-character rejection: 6/6.
+5. Request-timing instrumentation: 6/6.
+
+I executed and verified three official before trials and three official after trials: **27 fixed HTTP test-client requests per trial, 162 total**. All six saved reports have the same fixture fingerprint. The before baseline was already **instrumented capstone code**, not untouched Unit 8, so the passing before results do not show what the original Unit 8 code would have done.
+
+The table below is derived from the six saved publication-copy reports, not a new execution:
+
+| Trial and saved report | Requests attempted | Criteria 1–5 | Trial-level failures |
+|---|---:|---|---:|
+| [Before 1](results/unit9_public_evidence/before-trial-1/report.json) | 27 | All five MET | 0 |
+| [Before 2](results/unit9_public_evidence/before-trial-2/report.json) | 27 | All five MET | 0 |
+| [Before 3](results/unit9_public_evidence/before-trial-3/report.json) | 27 | All five MET | 0 |
+| [After 1](results/unit9_public_evidence/after-trial-1/report.json) | 27 | All five MET | 0 |
+| [After 2](results/unit9_public_evidence/after-trial-2/report.json) | 27 | All five MET | 0 |
+| [After 3](results/unit9_public_evidence/after-trial-3/report.json) | 27 | All five MET | 0 |
+
+Every trial passed all five criteria. The [sanitized evidence directory](results/unit9_public_evidence/) contains `report.json`, `summary.txt`, and `audit.jsonl` for each trial. Its [transparency README](results/unit9_public_evidence/README.md) explains the temporary-path redactions: only copied report metadata was redacted; summaries and audit files retain their original bytes. Original trial archives remain separate and untracked locally under `results/unit9_acceptance/`; they were not altered or replaced.
+
+These are mocked-scoring regression results, not GPT-2 performance or accuracy results. Inspect the saved evidence rather than casually rerunning an occupied official trial identity. The provenance checks, fixture definitions, targets, and archived results remain fixed.
+
+### The Improvement
+
+A separate isolated fault-injection probe mocked `detector.model_signal` to raise `detector.DetectorUnavailable`. Before the additional change, `/submit` returned HTTP 503 with `error="detector_unavailable"` and `X-Request-ID`, and wrote a timing event, but wrote **zero structured records explaining the detector failure**.
+
+I selected a narrow observability fix: the existing exception handler now attempts one `audit.log_rejection` call with the validated creator ID, `reason="detector_unavailable"`, `http_status=503`, and the correlated request ID. The existing generic 503 response remains unchanged when the write succeeds. This change is recorded in commit `862897a`.
+
+Afterward, the separate isolated probe produced **one correlated detector-failure rejection plus a timing event**, retaining HTTP 503 and request correlation. Injecting `OSError` into the new rejection write produced a controlled HTTP 500 `audit_write_failed` response with `X-Request-ID`, without leaking an internal exception, model path, or submitted text.
+
+**These fault-injection checks were separate from the six official acceptance trials.** The fixed trial cases did not trigger detector unavailability, so all five criteria were already MET before this fix and stayed MET afterward. The improvement closes an audit visibility gap; it does not demonstrate better model accuracy, faster inference, or higher frozen-criterion pass counts.
+
+### What's Still Broken
+
+- **Detection and fairness:** predictability and stylometry remain heuristics. I have not established authorship accuracy, reliable multilingual detection, or general false-positive/evasion rates. I preserved the Unit 8 thresholds and trade-offs, not solved them.
+- **Validation coverage:** the fixed English/accented samples and malformed fixtures are bounded examples, not exhaustive Unicode or adversarial coverage. The historical Unit 8 malformed-input results below were not rerun; Unit 9 addressed the specified input families without retroactively changing those HELD/BROKE marks.
+- **Rate limiting and identity:** limits use in-memory storage and reset with the process. Creator IDs are unauthenticated, so changing IDs can bypass a per-creator quota.
+- **Appeals:** `under_review` records intake, not human adjudication, identity verification, or a redesign of current submission status.
+- **Persistence and timing:** file writes can fail, and attempted appends do not guarantee crash-proof exactly-once persistence. Timing excludes some handling overhead and network delivery; missing timing writes require checking the application error log.
+- **Operation and costs:** public hosting, concurrent capacity, hardware/RAM requirements, energy, and total dollar cost are unproven. The small local timing samples and 100-request projection are not operating guarantees.
+
+### How I Used AI
 
 **Moment 1**
 
@@ -265,7 +342,17 @@ Multilingual input acceptance does not imply reliable authorship detection acros
 - *What came back:* AI helped diagnose the failures by comparing model scores, style scores, the combining rule, and the label thresholds. It also compared possible improvements and pointed out that lowering the AI cutoff could create another false accusation.
 - *What I changed:* AI helped draft and review the README and find rubric gaps. I checked the HTTP responses, scores, audit records, Git commits, and before/after reports myself. Those measured results came from the running service and the saved reports. I decided to raise `AI_THRESHOLD` from 0.65 to 0.72, accepting more `unsure` labels rather than making more unsupported AI accusations. No person adjudicated an appeal. I documented the remaining failures instead of hiding them.
 
+**Moment 4 — Unit 9: Reproducible hardening and failure evidence**
+
+- *What I asked for:* I asked AI to help plan and draft the fixed-fixture harness, perform read-only source checks, review failure evidence, and document the capstone improvement and real-model cost measurements without inventing results.
+- *What came back:* AI helped check patch targets, audit isolation, request-ID correlation, and evidence-preservation risks. It helped explain why the missing detector-failure record was an observability gap, and kept mocked regression outcomes separate from real GPT-2 timings and projected costs.
+- *What I controlled:* I executed and verified the acceptance trials, isolated fault-injection checks, and real-model measurements. I reviewed the saved reports, selected the detector-unavailability logging improvement, and controlled commits and pushes. AI-assisted source review and documentation were not substitutes for those executions, and I do not attribute tests to AI that it did not run.
+
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
+
+## Unit 8 — Historical Test Evidence
+
+Everything in the Unit 8 sections below describes the earlier implementation and its saved runs. The observed numbers, sample outputs, MET/MISSED verdicts, and HELD/BROKE judgments are preserved. The threshold change was the Unit 8 improvement, not the Unit 9 one. Unit 9 later addressed specified malformed-input families and logging gaps; these historical outputs were not rerun under the new implementation. References below to future validation work describe the Unit 8 state, not a claim that the completed Unit 9 checks are absent.
 
 ---
 
@@ -400,7 +487,7 @@ The runner's automatic verdicts do not judge whether an attack succeeded. They o
 
 ---
 
-## Run Log and Verdicts
+## Run Log and Verdicts — Unit 8 (Historical)
 
 The three trials are in `results/run_2026-11-08_0515_before.md`, produced by `run_eval.py::main`. The appeal check is in `results/appeals_before.md`. H01–H10 are self-reported human writing, not independently verified authorship. A01–A05 were generated by GPT-6 on November 8, 2026. The same scores came back in every trial.
 
@@ -475,7 +562,7 @@ Making the service more willing to say `ai` could catch more of the GPT-6 passag
 
 ---
 
-## The Improvement
+## The Improvement — Unit 8 (Historical)
 
 **What I changed:**
 
@@ -578,7 +665,7 @@ Criterion 2 still rests on `results/appeals_before.md`. That file records 15 bas
 
 ---
 
-## What's Still Broken
+## What's Still Broken — Unit 8 (Historical)
 
 The before totals are 41 HELD and 15 BROKE. The after totals are 45 HELD and 11 BROKE. The eleven that remain are EV01 through EV09, MF03, and MF04. Their combined scores were already below 0.65, so raising the cutoff to 0.72 did not create them. EV10 still returns `ai` at combined 0.819. The remedies below are future work. I have not implemented them. Unit 8 asked for one isolated improvement. A broader redesign needs its own tests for false accusations and for evasion.
 
