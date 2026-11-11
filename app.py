@@ -329,6 +329,18 @@ def submit():
     try:
         model_score = detector.model_signal(text)
     except detector.DetectorUnavailable:
+        try:
+            audit.log_rejection(
+                creator_id=creator_id,
+                reason="detector_unavailable",
+                request_id=g.request_id,
+                http_status=503,
+            )
+        except OSError:
+            return jsonify({
+                "error": "audit_write_failed",
+                "message": "The detector failure could not be recorded. Please try again.",
+            }), 500
         return jsonify({
             "error": "detector_unavailable",
             "message": "The detection model could not be loaded.",
