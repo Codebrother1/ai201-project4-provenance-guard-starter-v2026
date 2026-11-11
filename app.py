@@ -24,6 +24,7 @@ Routes:
     GET  /health      is the service up, and is the model loaded
 """
 
+import unicodedata
 import uuid
 
 from flask import Flask, jsonify, request
@@ -229,6 +230,21 @@ def submit():
         return jsonify({
             "error": "bad_request",
             "message": "text must be 300 words or fewer.",
+        }), 400
+
+    if any(
+        unicodedata.category(character) == "Cc" and character not in "\t\n\r"
+        for character in text
+    ):
+        return jsonify({
+            "error": "bad_request",
+            "message": "text must not contain control characters other than tab, newline, or carriage return.",
+        }), 400
+
+    if not any(unicodedata.category(character).startswith("L") for character in text):
+        return jsonify({
+            "error": "bad_request",
+            "message": "text must contain at least one Unicode letter.",
         }), 400
 
     import detector
