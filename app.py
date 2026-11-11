@@ -27,12 +27,27 @@ Routes:
 import unicodedata
 import uuid
 
-from flask import Flask, jsonify, request
+from flask import Flask, g, jsonify, request
 
 import audit
 import config
 
 app = Flask(__name__)
+
+
+@app.before_request
+def initialize_submit_request_id():
+    if request.method == "POST" and request.path == "/submit":
+        g.request_id = str(uuid.uuid4())
+
+
+@app.after_request
+def attach_submit_request_id(response):
+    if request.method == "POST" and request.path == "/submit":
+        request_id = g.get("request_id")
+        if request_id is not None:
+            response.headers["X-Request-ID"] = request_id
+    return response
 
 
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
